@@ -1,41 +1,227 @@
+/* === Font Imports === */
+@font-face {
+  font-family: 'SamirFont';
+  src: url('../fonts/SamirFont.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SecondaryFont';
+  src: url('../fonts/SecondaryFont.ttf') format('truetype');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* === Font Variables === */
+:root {
+  --font-primary: 'SamirFont', sans-serif;
+  --font-secondary: 'SecondaryFont', monospace;
+  --font-tertiary: 'Inter', sans-serif;
+}
+
+/* === General Styles === */
 body {
-  font-family: Helvetica, sans-serif;
+  font-family: var(--font-tertiary);
   background: #f9f9f9;
-  color: #333;
+  color: #111;
   margin: 0;
   padding: 40px;
+  scroll-behavior: smooth;
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 40px;
 }
 
+.logo {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  color: #000;
+  text-decoration: none;
+}
+
 .name {
+  font-family: var(--font-secondary);
   font-weight: bold;
+  font-size: 1.5rem;
 }
 
 nav a {
   margin-left: 20px;
   text-decoration: none;
-  color: #333;
+  color: #111;
+  font-family: var(--font-secondary);
+  text-transform: lowercase;
 }
 
-main {
-  max-width: 800px;
+/* === Home Page Styles === */
+body.home-page {
+  background: #fff;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
+.home-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-secondary), monospace;
 }
 
-.photo-grid img {
+.home-links a {
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+  text-transform: lowercase;
+  transition: opacity 0.2s ease;
+}
+
+.home-links a:hover {
+  opacity: 0.6;
+}
+
+.under-construction {
+  font-family: var(--font-secondary), monospace;
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 100px;
+  color: #000;
+  text-transform: lowercase;
+  opacity: 0.7;
+  animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* === Scanner Landing Page === */
+body.scanner-landing {
+  background-color: #ffffff;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scanner-name {
+  position: relative;
+  font-family: var(--font-primary);
+  font-size: 6rem;
+  text-decoration: none;
+  color: #000;
+  letter-spacing: 0.2em;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.scanner-name span {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.scanline {
+  position: absolute;
+  top: -2px;
+  left: 0;
   width: 100%;
+  height: 13px;
+  background: white;
+  box-shadow: 0 0 20px 10px white;
+  animation: scan 5s ease-in-out infinite;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+@keyframes scan {
+  0%   { top: -20%; opacity: 0; }
+  20%  { opacity: 1; }
+  50%  { top: 50%; opacity: 1; }
+  80%  { opacity: 1; }
+  100% { top: 120%; opacity: 0; }
+}
+
+/* === Brutalist Photo Grid === */
+html, body {
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-y: hidden;
+  overscroll-behavior: none;
+}
+.photo-gallery {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.photo-wrapper {
+  scroll-snap-align: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1 rem;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.photo-wrapper.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.photo-wrapper img {
+  width: auto;
+  max-width: 100%;
   height: auto;
+  max-height: 100vh;
+  object-fit: contain;
   display: block;
-  border-radius: 4px;
+  margin: 0 auto;
+  filter: contrast(110%) brightness(98%);
+}
+
+.corner-logo {
+  position: fixed;
+  top: 20px;
+  left: 30px;
+  font-family: var(--font-primary);
+  font-size: 3rem; /* Made it bigger */
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000;
+  text-decoration: none;
+  z-index: 1000;
+  letter-spacing: 0.05em; /* Optional: adds some spacing for flair */
+}
+
+body.home-page {
+  background: url('../images/homebackground.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff; /* optional: improve text contrast */
+}
+
+body.photo-page {
+  background: url('../images/homebackground2.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff; /* optional: improve text contrast */
 }

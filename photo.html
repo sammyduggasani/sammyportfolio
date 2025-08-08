@@ -3,28 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Photography</title>
+  <title>Photos</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      margin: 0;
+      background: #f9f9f9;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .top-left-link {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-family: 'SamirFont';
+      font-size: 3rem;
+      text-decoration: none;
+      color: black;
+      z-index: 999;
+      text-transform: uppercase;
+    }
+
+    .photo-scroll-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      width: 100vw;
+      height: 100vh;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    .photo-slide {
+      flex: none;
+      width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .photo-slide img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      filter: contrast(110%) brightness(98%);
+    }
+  </style>
 </head>
-<body>
-  <header>
-    <div class="nav">
-      <span class="name">sammy duggasani</span>
-      <nav>
-        <a href="data.html">data</a>
-        <a href="photo.html">photo</a>
-        <a href="thoughts.html">thoughts</a>
-        <a href="about.html">about</a>
-      </nav>
+<body class="photo-page">
+  <a href="index.html" class="top-left-link">samir</a>
+
+  <div class="photo-scroll-container">
+    <div class="photo-slide">
+      <img src="photos/BZN1.jpg" alt="BZN1">
     </div>
-  </header>
-  <main>
-    <h1>Photo</h1>
-    <div class="photo-grid">
-      <img src="photos/photo1.jpg" alt="Photo 1" />
-      <img src="photos/photo2.jpg" alt="Photo 2" />
-      <img src="photos/photo3.jpg" alt="Photo 3" />
+    <div class="photo-slide">
+      <img src="photos/BZN2.jpg" alt="BZN2">
     </div>
-  </main>
+    <div class="photo-slide">
+      <img src="photos/CDMX1.jpg" alt="CDMX1">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/CDMX2.jpg" alt="CDMX2">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/CDMX3.jpg" alt="CDMX3">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/CDMX4.jpg" alt="CDMX4">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/HYD1.jpg" alt="HYD1">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/HYD2.jpg" alt="HYD2">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/HYD3.jpg" alt="HYD3">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/HYD4.jpg" alt="HYD4">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/HYD5.jpg" alt="HYD5">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/HYD6.jpg" alt="HYD6">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/SF1.jpg" alt="SF1">
+    </div>
+    <div class="photo-slide">
+      <img src="photos/CMB1.jpg" alt="CMB1">
+    </div>
+  </div>
 </body>
+
 </html>
+
