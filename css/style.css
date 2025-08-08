@@ -133,9 +133,14 @@ body.scanner-landing {
 }
 
 .scanner-name span {
+  font-family: var(--font-primary);
+  font-size: 6rem;
   display: inline-block;
-  position: relative;
-  z-index: 1;
+  color: transparent;
+  background: url('../images/samirfill4.gif') center center / cover no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* === Brutalist Photo Grid === */
@@ -202,7 +207,7 @@ body.home-page {
 }
 
 body.photo-page {
-  background: url('../images/homebackground2.jpg') no-repeat center center fixed;
+  background: url('../images/homebackground3.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff; /* optional: improve text contrast */
 }
