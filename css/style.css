@@ -211,3 +211,9 @@ body.photo-page {
   background-size: cover;
   color: #fff; /* optional: improve text contrast */
 }
+
+body.about-page {
+  background: url('../images/homebackground4.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff; /* optional: improve text contrast */
+}
