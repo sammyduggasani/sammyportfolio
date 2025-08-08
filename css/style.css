@@ -108,8 +108,9 @@ body.home-page {
 
 /* === Scanner Landing Page === */
 body.scanner-landing {
-  background-color: #ffffff;
-  color: #000;
+  background: url('../images/homebackground2.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #ffff;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -118,6 +119,7 @@ body.scanner-landing {
   justify-content: center;
   align-items: center;
 }
+
 
 .scanner-name {
   position: relative;
@@ -134,27 +136,6 @@ body.scanner-landing {
   display: inline-block;
   position: relative;
   z-index: 1;
-}
-
-.scanline {
-  position: absolute;
-  top: -2px;
-  left: 0;
-  width: 100%;
-  height: 13px;
-  background: white;
-  box-shadow: 0 0 20px 10px white;
-  animation: scan 5s ease-in-out infinite;
-  z-index: 2;
-  opacity: 0.8;
-}
-
-@keyframes scan {
-  0%   { top: -20%; opacity: 0; }
-  20%  { opacity: 1; }
-  50%  { top: 50%; opacity: 1; }
-  80%  { opacity: 1; }
-  100% { top: 120%; opacity: 0; }
 }
 
 /* === Brutalist Photo Grid === */
