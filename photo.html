@@ -116,6 +116,15 @@
     document.querySelector('.left-zone').addEventListener('click', () => {
       container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     });
+  
+    // Add keyboard arrow key navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      } else if (e.key === 'ArrowLeft') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      }
+    });
   </script>
 </body>
 
