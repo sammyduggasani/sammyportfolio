@@ -54,6 +54,13 @@
       height: 100vh;
       -webkit-overflow-scrolling: touch;
       scroll-behavior: smooth;
+
+      scrollbar-width: none;         /* Firefox */
+      -ms-overflow-style: none;
+    }
+
+    .photo-scroll-container::-webkit-scrollbar {
+      display: none;                 /* Chrome, Safari, Opera */
     }
 
     .photo-slide {
@@ -67,6 +74,7 @@
       position: relative;
       padding: 40px;
       box-sizing: border-box;
+      overflow: hidden;
     }
 
     .photo-slide img {
@@ -74,7 +82,36 @@
       max-height: 90%;
       object-fit: contain;
       filter: contrast(110%) brightness(98%);
+      display: block;
     }
+
+    .bottom-right-arrows {
+      position: fixed;
+      bottom: 30px;
+      right: 40px;
+      z-index: 999;
+      display: flex;
+      gap: 12px;
+    }
+
+    .arrow-btn {
+      font-family: 'SecondaryFont', monospace; /* pixel font */
+      font-size: 2rem;
+      color: white;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .arrow-btn:hover {
+      background: rgba(255, 255, 255, 0.85);
+      color: black;
+      trans form: scale(1.1);
+    }
+          }
   </style>
 </head>
 <body class="photo-page">
@@ -82,6 +119,10 @@
   <div class="scroll-zone left-zone"></div>
   <div class="scroll-zone right-zone"></div>
   <div class="photo-scroll-container">
+  <div class="bottom-right-arrows">
+    <span class="arrow-btn left-btn">&lt;</span>
+    <span class="arrow-btn right-btn">&gt;</span>
+  </div>
   <div class="photo-slide"><img src="photos/SL1.jpg" alt="SL1"></div>
   <div class="photo-slide"><img src="photos/BZN1.jpg" alt="BZN1"></div>
   <div class="photo-slide"><img src="photos/HYD1.jpg" alt="HYD1"></div>
@@ -108,24 +149,54 @@
   <script>
     const container = document.querySelector('.photo-scroll-container');
     const scrollAmount = window.innerWidth;
+    const leftBtn = document.querySelector('.left-btn');
+    const rightBtn = document.querySelector('.right-btn');
   
-    document.querySelector('.right-zone').addEventListener('click', () => {
+// Show/hide arrows based on scroll position
+  function updateArrowVisibility() {
+    const scrollLeft = container.scrollLeft;
+    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+    // First slide = hide left arrow
+    if (scrollLeft <= 10) {
+      leftBtn.style.display = 'none';
+    } else {
+      leftBtn.style.display = 'inline-block';
+    }
+
+    // Last slide = hide right arrow
+    if (scrollLeft >= maxScrollLeft - 10) {
+      rightBtn.style.display = 'none';
+    } else {
+      rightBtn.style.display = 'inline-block';
+    }
+  }
+
+  // Scroll events: buttons
+  leftBtn.addEventListener('click', () => {
+    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  rightBtn.addEventListener('click', () => {
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+
+  // Scroll event: keyboard
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
-  
-    document.querySelector('.left-zone').addEventListener('click', () => {
+    } else if (e.key === 'ArrowLeft') {
       container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
-  
-    // Add keyboard arrow key navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') {
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      } else if (e.key === 'ArrowLeft') {
-        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-      }
-    });
+    }
+  });
+
+  // Scroll event: update arrows as user scrolls
+  container.addEventListener('scroll', updateArrowVisibility);
+
+  // Run once on load
+  updateArrowVisibility();
   </script>
+
 </body>
 
 </html>
