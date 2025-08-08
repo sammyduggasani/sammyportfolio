@@ -15,6 +15,23 @@
       font-family: 'Inter', sans-serif;
     }
 
+    .scroll-zone {
+      position: fixed;
+      top: 0;
+      width: 50vw;
+      height: 100vh;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .left-zone {
+      left: 0;
+    }
+
+    .right-zone {
+      right: 0;
+    }
+
     .top-left-link {
       position: fixed;
       top: 20px;
@@ -62,7 +79,8 @@
 </head>
 <body class="photo-page">
   <a href="index.html" class="top-left-link">samir</a>
-
+  <div class="scroll-zone left-zone"></div>
+  <div class="scroll-zone right-zone"></div>
   <div class="photo-scroll-container">
   <div class="photo-slide"><img src="photos/SL1.jpg" alt="SL1"></div>
   <div class="photo-slide"><img src="photos/BZN1.jpg" alt="BZN1"></div>
@@ -87,6 +105,18 @@
   <div class="photo-slide"><img src="photos/ATL1.jpg" alt="ATL1"></div>
   <div class="photo-slide"><img src="photos/CMB1.jpg" alt="CMB1"></div>
   </div>
+  <script>
+    const container = document.querySelector('.photo-scroll-container');
+    const scrollAmount = window.innerWidth;
+  
+    document.querySelector('.right-zone').addEventListener('click', () => {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  
+    document.querySelector('.left-zone').addEventListener('click', () => {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+  </script>
 </body>
 
 </html>
