@@ -92,14 +92,6 @@ body.home-page {
   background: url('../images/homebackground.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff;
-
-  min-height: 100svh;
-  height: 100dvh;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
 }
 
 .home-links {
