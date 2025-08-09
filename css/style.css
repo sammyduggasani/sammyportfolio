@@ -84,10 +84,13 @@ body.home-page {
   background: url('../images/homebackground.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff;
+
+  min-height: 100dvh;
+  min-height: 100vh;
+  
   display: flex;
   justify-content: center;
-  align-items: center;
-  minheight: 100dvh; /* Fix for Chrome mobile */
+  align-items: center; /* Fix for Chrome mobile */
 }
 
 .home-links {
@@ -133,12 +136,13 @@ body.scanner-landing {
   background: url('../images/homebackground2.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #ffff;
+
+  height: 100dvh; /* Fix for Chrome mobile */
+  height: 100vh;
+  
   display: flex;
   justify-content: center;
   align-items: center;
-
-  height: 100dvh; /* Fix for Chrome mobile */
-  height: 100vh;  /* Fallback for Safari and others */
 }
 
 .scanner-name {
