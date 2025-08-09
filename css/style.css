@@ -275,8 +275,8 @@ body.about-page {
 /* Mobile scaling for SAMIR */
 @media (max-width: 768px) {
   .scanner-name span {
-    font-size: clamp(2rem, 8vw, 4rem); /* Shrinks on small screens */
-    letter-spacing: 0.1em; /* Tighter spacing for small viewports */
+    font-size: clamp(3rem, 15vw, 6rem); /* Shrinks on small screens */
+    letter-spacing: 0.05em; /* Tighter spacing for small viewports */
   }
 
   body.scanner-landing {
@@ -288,6 +288,6 @@ body.about-page {
 /* Very small screens (phones in portrait) */
 @media (max-width: 480px) {
   .scanner-name span {
-    font-size: clamp(1.5rem, 10vw, 3rem);
+    font-size: clamp(2.5rem, 18vw, 5rem);
   }
 }
