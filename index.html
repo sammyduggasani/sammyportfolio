@@ -7,13 +7,42 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-
 </head>
-<body class="scanner-landing" onclick="window.location.href='home.html'">
-  <a href="home.html" class="scanner-name">
+<body class="scanner-landing">
+
+  <!-- SAMIR clickable -->
+  <a href="#" class="scanner-name" id="samir-link">
     <span>SAMIR</span>
   </a>
+
+  <!-- Hidden audio -->
+  <audio id="instrumental" src="audio/bgsnippet.mp3"></audio>
+
+  <script>
+    const samirLink = document.getElementById('samir-link');
+    const audio = document.getElementById('instrumental');
+
+    // Clicking anywhere else on the page → go to home immediately
+    document.body.addEventListener('click', function() {
+      window.location.href = 'home.html';
+    });
+
+    // Clicking SAMIR → play full mp3, then go to home
+    samirLink.addEventListener('click', function(e) {
+      e.stopPropagation(); // Prevent body click from firing
+      e.preventDefault();
+
+      audio.currentTime = 0; // Ensure start from beginning
+      audio.play();
+
+      audio.onended = () => {
+        window.location.href = 'home.html';
+      };
+    });
+  </script>
+
 </body>
 </html>
+
 
 
