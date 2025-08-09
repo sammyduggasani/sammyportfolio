@@ -19,15 +19,26 @@
 }
 
 /* === General Styles === */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-y: hidden; /* lock vertical scroll everywhere */
+  overscroll-behavior: none;
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-tertiary);
   background: #f9f9f9;
   color: #111;
-  margin: 0;
-  padding: 0; /* remove to avoid extra height */
-  scroll-behavior: smooth;
-  height: 100vh; /* fill viewport height */
-  overflow-y: hidden; /* lock vertical scroll */
+}
+
+/* Ensure all page backgrounds fill screen */
+body {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .nav {
@@ -62,8 +73,6 @@ nav a {
 body.home-page {
   background: #fff;
   color: #000;
-  margin: 0;
-  padding: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -113,8 +122,6 @@ body.scanner-landing {
   background: url('../images/homebackground2.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #ffff;
-  margin: 0;
-  padding: 0;
   height: 100vh;
   overflow: hidden;
   display: flex;
@@ -145,12 +152,6 @@ body.scanner-landing {
 }
 
 /* === Brutalist Photo Grid === */
-html, body {
-  scroll-behavior: smooth;
-  height: 100%;
-  overflow-y: hidden;
-  overscroll-behavior: none;
-}
 .photo-gallery {
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
@@ -161,9 +162,9 @@ html, body {
   scroll-snap-align: center;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* Align left so light leak shows */
   align-items: center;
-  padding: 2rem 1 rem;
+  padding: 0; /* Removed padding to avoid crop */
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -179,11 +180,10 @@ html, body {
 .photo-wrapper img {
   width: auto;
   max-width: 100%;
-  height: auto;
   max-height: 100vh;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
+  margin: 0;
   filter: contrast(110%) brightness(98%);
 }
 
@@ -192,31 +192,32 @@ html, body {
   top: 20px;
   left: 30px;
   font-family: var(--font-primary);
-  font-size: 3rem; /* Made it bigger */
+  font-size: 3rem;
   font-weight: bold;
   text-transform: uppercase;
   color: #000;
   text-decoration: none;
   z-index: 1000;
-  letter-spacing: 0.05em; /* Optional: adds some spacing for flair */
+  letter-spacing: 0.05em;
 }
 
 body.home-page {
   background: url('../images/homebackground.jpg') no-repeat center center fixed;
   background-size: cover;
-  color: #fff; /* optional: improve text contrast */
+  color: #fff;
 }
 
 body.photo-page {
   background: url('../images/homebackground3.jpg') no-repeat center center fixed;
   background-size: cover;
-  color: #fff; /* optional: improve text contrast */
+  background-position: left center; /* ensures light leak visible */
+  color: #fff;
 }
 
 body.about-page {
   background: url('../images/homebackground4.jpg') no-repeat center center fixed;
   background-size: cover;
-  color: #fff; /* optional: improve text contrast */
+  color: #fff;
 }
 
 /* === About Page Responsive Styles === */
@@ -275,8 +276,8 @@ body.about-page {
 /* Mobile scaling for SAMIR */
 @media (max-width: 768px) {
   .scanner-name span {
-    font-size: clamp(3rem, 15vw, 6rem); /* Shrinks on small screens */
-    letter-spacing: 0.05em; /* Tighter spacing for small viewports */
+    font-size: clamp(3rem, 15vw, 6rem);
+    letter-spacing: 0.05em;
   }
 
   body.scanner-landing {
@@ -291,3 +292,4 @@ body.about-page {
     font-size: clamp(2.5rem, 18vw, 5rem);
   }
 }
+
