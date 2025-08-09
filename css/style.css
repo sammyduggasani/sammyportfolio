@@ -28,8 +28,16 @@ html, body {
   background-color: black; /* or your default bg */
 }
 
-@supports(padding: max(0px)) {
+/* @supports(padding: max(0px)) {
   body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+} */
+# only add safe-area padding to pages that scroll
+@supports(padding: max(0px)) {
+  body.about-page,
+  body.photo-page {
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
   }
@@ -85,12 +93,13 @@ body.home-page {
   background-size: cover;
   color: #fff;
 
-  min-height: 100dvh;
-  min-height: 100vh;
-  
+  min-height: 100svh;
+  height: 100dvh;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* Fix for Chrome mobile */
+  align-items: center;
+
 }
 
 .home-links {
@@ -137,12 +146,13 @@ body.scanner-landing {
   background-size: cover;
   color: #ffff;
 
-  height: 100dvh; /* Fix for Chrome mobile */
-  height: 100vh;
-  
+  min-height: 100svh;   /* iOS Safari stable viewport */
+  height: 100dvh;       /* modern browsers */
+  height: 100vh;        /* fallback */
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .scanner-name {
