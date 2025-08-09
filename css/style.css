@@ -87,9 +87,7 @@ body.home-page {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  height: 100dvh; /* Fix for Chrome mobile */
-  height: 100vh;  /* Fallback for Safari and others */
+  minheight: 100dvh; /* Fix for Chrome mobile */
 }
 
 .home-links {
