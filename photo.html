@@ -15,24 +15,6 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* Click zones */
-    .scroll-zone {
-      position: fixed;
-      top: 0;
-      width: 50vw;
-      height: 100vh;
-      z-index: 10;
-      pointer-events: none; /* Don’t block other elements */
-    }
-    .scroll-zone .zone-click {
-      width: 100%;
-      height: 100%;
-      pointer-events: auto; /* Only this child is clickable */
-      cursor: pointer;
-    }
-    .left-zone { left: 0; }
-    .right-zone { right: 0; }
-
     /* Top-left home link */
     .top-left-link {
       position: fixed;
@@ -114,14 +96,6 @@
 
   <a href="index.html" class="top-left-link">samir</a>
 
-  <!-- Click zones (safe for arrows now) -->
-  <div class="scroll-zone left-zone">
-    <div class="zone-click" id="zone-left"></div>
-  </div>
-  <div class="scroll-zone right-zone">
-    <div class="zone-click" id="zone-right"></div>
-  </div>
-
   <!-- Photo gallery -->
   <div class="photo-scroll-container" id="photo-container">
     <div class="bottom-right-arrows">
@@ -158,8 +132,6 @@
     const scrollAmount = window.innerWidth;
     const leftBtn = document.querySelector('.left-btn');
     const rightBtn = document.querySelector('.right-btn');
-    const zoneLeft = document.getElementById('zone-left');
-    const zoneRight = document.getElementById('zone-right');
 
     // Update arrow visibility
     function updateArrowVisibility() {
@@ -178,14 +150,6 @@
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     });
 
-    // Zone clicks
-    zoneLeft.addEventListener('click', () => {
-      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
-    zoneRight.addEventListener('click', () => {
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
-
     // Keyboard arrows
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
@@ -201,5 +165,6 @@
 
 </body>
 </html>
+
 
 

@@ -24,8 +24,10 @@ body {
   background: #f9f9f9;
   color: #111;
   margin: 0;
-  padding: 40px;
+  padding: 0; /* remove to avoid extra height */
   scroll-behavior: smooth;
+  height: 100vh; /* fill viewport height */
+  overflow-y: hidden; /* lock vertical scroll */
 }
 
 .nav {
