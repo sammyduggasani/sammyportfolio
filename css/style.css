@@ -18,29 +18,31 @@
   --font-tertiary: 'Inter', sans-serif;
 }
 
-/* === General Styles === */
+/* === Global Reset & Layout === */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow-y: hidden; /* lock vertical scroll everywhere */
-  overscroll-behavior: none;
   scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
+/* Lock scroll everywhere except About & Photos */
+body:not(.about-page):not(.photo-page) {
+  overflow: hidden;
+  height: 100vh;
 }
 
 body {
   font-family: var(--font-tertiary);
   background: #f9f9f9;
   color: #111;
-}
-
-/* Ensure all page backgrounds fill screen */
-body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
+/* === Nav === */
 .nav {
   display: flex;
   justify-content: space-between;
@@ -69,11 +71,11 @@ nav a {
   text-transform: lowercase;
 }
 
-/* === Home Page Styles === */
+/* === Home Page === */
 body.home-page {
-  background: #fff;
-  color: #000;
-  height: 100vh;
+  background: url('../images/homebackground.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,8 +124,6 @@ body.scanner-landing {
   background: url('../images/homebackground2.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #ffff;
-  height: 100vh;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,7 +151,13 @@ body.scanner-landing {
   -webkit-text-fill-color: transparent;
 }
 
-/* === Brutalist Photo Grid === */
+/* === Photo Page === */
+body.photo-page {
+  background: url('../images/homebackground3.jpg') no-repeat left center fixed;
+  background-size: contain; /* ensures full image fits without cropping */
+  background-color: black; /* fills any extra space on the right */
+}
+
 .photo-gallery {
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
@@ -162,9 +168,9 @@ body.scanner-landing {
   scroll-snap-align: center;
   min-height: 100vh;
   display: flex;
-  justify-content: flex-start; /* Align left so light leak shows */
+  justify-content: flex-start;
   align-items: center;
-  padding: 0; /* Removed padding to avoid crop */
+  padding: 40px 0; /* Extra breathing room for SAMIR */
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -187,6 +193,7 @@ body.scanner-landing {
   filter: contrast(110%) brightness(98%);
 }
 
+/* === Corner Logo === */
 .corner-logo {
   position: fixed;
   top: 20px;
@@ -201,26 +208,13 @@ body.scanner-landing {
   letter-spacing: 0.05em;
 }
 
-body.home-page {
-  background: url('../images/homebackground.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-}
-
-body.photo-page {
-  background: url('../images/homebackground3.jpg') no-repeat center center fixed;
-  background-size: cover;
-  background-position: left center; /* ensures light leak visible */
-  color: #fff;
-}
-
+/* === About Page === */
 body.about-page {
   background: url('../images/homebackground4.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff;
 }
 
-/* === About Page Responsive Styles === */
 .about-container {
   max-width: 700px;
   margin: 100px auto;
@@ -241,8 +235,13 @@ body.about-page {
   text-decoration: underline;
 }
 
-/* Mobile tweaks */
+/* === Mobile Tweaks === */
 @media (max-width: 768px) {
+  body:not(.about-page):not(.photo-page) {
+    position: fixed;
+    width: 100%;
+  }
+
   .about-container {
     margin: 60px auto;
     padding: 16px;
@@ -259,22 +258,7 @@ body.about-page {
     font-size: 0.95rem;
     line-height: 1.5;
   }
-}
 
-/* Very small phones */
-@media (max-width: 480px) {
-  .about-container {
-    padding: 12px;
-    margin: 40px auto;
-  }
-
-  .about-container h1 {
-    font-size: 1.5rem;
-  }
-}
-
-/* Mobile scaling for SAMIR */
-@media (max-width: 768px) {
   .scanner-name span {
     font-size: clamp(3rem, 15vw, 6rem);
     letter-spacing: 0.05em;
@@ -286,10 +270,18 @@ body.about-page {
   }
 }
 
-/* Very small screens (phones in portrait) */
+/* Very small screens */
 @media (max-width: 480px) {
+  .about-container {
+    padding: 12px;
+    margin: 40px auto;
+  }
+
+  .about-container h1 {
+    font-size: 1.5rem;
+  }
+
   .scanner-name span {
     font-size: clamp(2.5rem, 18vw, 5rem);
   }
 }
-
