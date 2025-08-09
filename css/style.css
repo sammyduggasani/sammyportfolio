@@ -120,7 +120,6 @@ body.scanner-landing {
   align-items: center;
 }
 
-
 .scanner-name {
   position: relative;
   font-family: var(--font-primary);
@@ -216,4 +215,77 @@ body.about-page {
   background: url('../images/homebackground4.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff; /* optional: improve text contrast */
+}
+
+/* === About Page Responsive Styles === */
+.about-container {
+  max-width: 700px;
+  margin: 100px auto;
+  padding: 20px;
+  font-family: var(--font-tertiary);
+  color: white;
+  line-height: 1.6;
+}
+
+.about-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-secondary);
+}
+
+.about-container a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .about-container {
+    margin: 60px auto;
+    padding: 16px;
+    font-size: 1rem;
+  }
+
+  .about-container h1 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .about-container p,
+  .about-container li {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  .about-container {
+    padding: 12px;
+    margin: 40px auto;
+  }
+
+  .about-container h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mobile scaling for SAMIR */
+@media (max-width: 768px) {
+  .scanner-name span {
+    font-size: clamp(2rem, 8vw, 4rem); /* Shrinks on small screens */
+    letter-spacing: 0.1em; /* Tighter spacing for small viewports */
+  }
+
+  body.scanner-landing {
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* Very small screens (phones in portrait) */
+@media (max-width: 480px) {
+  .scanner-name span {
+    font-size: clamp(1.5rem, 10vw, 3rem);
+  }
 }
