@@ -146,13 +146,13 @@ body.scanner-landing {
   background-size: cover;
   color: #ffff;
 
-  min-height: 100svh;   /* iOS Safari stable viewport */
-  height: 100dvh;       /* modern browsers */
-  height: 100vh;        /* fallback */
+  /* Chrome mobile fix */
+  min-height: 100dvh; /* dynamic viewport height */
+  min-height: 100vh;  /* fallback */
+
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .scanner-name {
