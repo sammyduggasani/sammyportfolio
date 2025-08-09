@@ -8,9 +8,15 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   <style>
-    body {
+    body.photo-page {
       margin: 0;
-      background: #f9f9f9;
+      padding: 0;
+      background: url('images/homebackground3.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      height: 100vh;
+      width: 100vw;
       overflow: hidden;
       font-family: 'Inter', sans-serif;
     }
@@ -41,6 +47,7 @@
       scroll-behavior: smooth;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      background: transparent; /* no override of body background */
     }
     .photo-scroll-container::-webkit-scrollbar { display: none; }
 
@@ -133,16 +140,13 @@
     const leftBtn = document.querySelector('.left-btn');
     const rightBtn = document.querySelector('.right-btn');
 
-    // Update arrow visibility
     function updateArrowVisibility() {
       const scrollLeft = container.scrollLeft;
       const maxScrollLeft = container.scrollWidth - container.clientWidth;
-
       leftBtn.style.display = (scrollLeft <= 10) ? 'none' : 'inline-block';
       rightBtn.style.display = (scrollLeft >= maxScrollLeft - 10) ? 'none' : 'inline-block';
     }
 
-    // Button clicks
     leftBtn.addEventListener('click', () => {
       container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     });
@@ -150,21 +154,18 @@
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     });
 
-    // Keyboard arrows
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       if (e.key === 'ArrowLeft') container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     });
 
-    // On scroll update arrows
     container.addEventListener('scroll', updateArrowVisibility);
-
-    // Init
     updateArrowVisibility();
   </script>
 
 </body>
 </html>
+
 
 
 

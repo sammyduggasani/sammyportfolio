@@ -23,8 +23,16 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  scroll-behavior: smooth;
-  overscroll-behavior: none;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: black; /* or your default bg */
+}
+
+@supports(padding: max(0px)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 /* Lock scroll everywhere except About & Photos */
