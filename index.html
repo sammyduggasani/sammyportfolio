@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>SAMIR</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
@@ -10,15 +10,28 @@
 </head>
 <body class="scanner-landing">
 
-  <!-- SAMIR clickable -->
-  <a href="#" class="scanner-name" id="samir-link">
-    <span>SAMIR</span>
-  </a>
+  <!-- Full-height centering wrapper -->
+  <div class="vh-100 center">
+    <!-- SAMIR clickable -->
+    <a href="#" class="scanner-name" id="samir-link">
+      <span>SAMIR</span>
+    </a>
+  </div>
 
   <!-- Hidden audio -->
   <audio id="instrumental" src="audio/bgsnippet.mp3"></audio>
 
   <script>
+    // --- real viewport height fix (handles Chrome mobile address bar) ---
+    function setVh() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
+    window.addEventListener('orientationchange', setVh);
+
+    // --- existing click logic ---
     const samirLink = document.getElementById('samir-link');
     const audio = document.getElementById('instrumental');
 

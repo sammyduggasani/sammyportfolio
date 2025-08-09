@@ -145,14 +145,7 @@ body.scanner-landing {
   background: url('../images/homebackground2.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #ffff;
-
-  /* Chrome mobile fix */
-  min-height: 100dvh; /* dynamic viewport height */
-  min-height: 100vh;  /* fallback */
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* no height / no display:flex here */
 }
 
 .scanner-name {
@@ -310,4 +303,15 @@ body.about-page {
   .scanner-name span {
     font-size: clamp(2.5rem, 18vw, 5rem);
   }
+}
+/* Full-viewport fix using JS-driven --vh */
+.vh-100 {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Flex centering utility */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
