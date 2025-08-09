@@ -34,7 +34,7 @@ html, body {
     padding-bottom: env(safe-area-inset-bottom);
   }
 } */
-# only add safe-area padding to pages that scroll
+
 @supports(padding: max(0px)) {
   body.about-page,
   body.photo-page {
