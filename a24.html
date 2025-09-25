@@ -218,22 +218,33 @@
   function render(){
     const root = $('#root'); root.innerHTML=''; const selected = getQ('film');
 
-    // Header with A24 logo (click to go home)
-    const header = h('div',{className:'flex items-center justify-between'});
-    const logoBtn = h('button',{className:'group', onclick:()=>{ setQ('film',null); render(); }},
-      (()=>{ const img = document.createElement('img');
+    // Header: A24 logo + "Double Feature" text as one clickable brand
+    const header = h('div', { className: 'flex items-center justify-between' });
+    const brandBtn = h(
+      'button',
+      {
+        className: 'group flex items-center gap-2 md:gap-3',
+        onclick: () => { setQ('film', null); render(); },
+        title: 'Home',
+      },
+      (() => {
+        const img = document.createElement('img');
         img.src = '/images/A24_logo.svg';
         img.alt = 'A24';
         img.className = 'h-8 md:h-10 opacity-90 group-hover:opacity-100 transition logo-invert';
-        return img; })()
+        return img;
+      })(),
+      h('span', {
+        className: 'text-2xl md:text-3xl font-medium leading-none tracking-tight opacity-90 group-hover:opacity-100 transition',
+      }, 'Double Feature')
     );
-    header.append(logoBtn);
+    header.append(brandBtn);
     root.append(header);
 
     if (!selected){
       // GRID
       const list = buildA24List();
-      root.append(h('p',{className:'mt-4 text-neutral-300'}, 'Hover over a title for more info. Click to see what it pairs well with.'));
+      root.append(h('p',{className:'mt-4 text-neutral-300'}, 'Hover over a poster for more info. Click to see what it pairs well with.'));
       const grid = h('div',{className:'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-6'});
       list.forEach(card=> grid.append(gridItem(card)));
       root.append(grid);
