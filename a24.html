@@ -388,7 +388,7 @@
             const cast=(m.cast?.length? m.cast.slice(0,8).join(', '):'');
             return h('div',{className:'mt-3 text-sm text-neutral-300 space-y-2'},
               h('div',{}, [genres, rt, rate].filter(Boolean).join(' • ')),
-              directors ? h('div',{}, h('span',{className:'text-neutral-400'},'Director(s): '), directors) : '',
+              directors ? h('div',{}, h('span',{className:'text-neutral-400'},'Director(s) + Producer(s): '), directors) : '',
               cast ? h('div',{}, h('span',{className:'text-neutral-400'},'Cast: '), cast) : '',
               m.overview ? h('div',{className:'text-neutral-200 mt-2'}, m.overview) : ''
             );
