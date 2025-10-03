@@ -204,19 +204,20 @@ body.photo-page {
   filter: contrast(110%) brightness(98%);
 }
 
-/* === Corner Logo === */
 .corner-logo {
   position: fixed;
   top: 20px;
   left: 30px;
   font-family: var(--font-primary);
   font-size: 3rem;
-  font-weight: bold;
+  font-weight: normal; /* Change from bold */
   text-transform: uppercase;
   color: #000;
   text-decoration: none;
   z-index: 1000;
   letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased; /* Add this */
+  -moz-osx-font-smoothing: grayscale; /* Add this */
 }
 
 /* === About Page === */

@@ -244,7 +244,7 @@
     if (!selected){
       // GRID
       const list = buildA24List();
-      root.append(h('p',{className:'mt-4 text-neutral-300'}, 'Hover over a poster for more info. Click to see what it pairs well with.'));
+      root.append(h('p',{className:'mt-4 text-neutral-300'}, 'Hover over a poster for more info. Click to see what other titles Letterboxd users pair it with.'));
       const grid = h('div',{className:'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-6'});
       list.forEach(card=> grid.append(gridItem(card)));
       root.append(grid);
@@ -290,7 +290,7 @@
 
       const box = h('section',{className:'mt-10 bg-neutral-800 border border-neutral-700 rounded-2xl overflow-hidden'});
       box.append(
-        h('div',{className:'px-5 py-4 border-b border-neutral-700'}, h('h3',{className:'text-xl'}, 'Other Titles that Pair Well')),
+        h('div',{className:'px-5 py-4 border-b border-neutral-700'}, h('h3',{className:'text-xl'}, 'What Letterboxd Users Are Pairing It With')),
         h('div',{className:'p-5 divide-y divide-neutral-700'},
           ...d.recs.map(r=> recRow(r, POSTERS, META))
         )

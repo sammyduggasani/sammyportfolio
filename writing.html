@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing - SAMIR</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <style>
+    body.writing-page {
+      background: url('../images/homebackground4.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    body.writing-page .corner-logo {
+      color: #fff;
+      font-weight: normal;
+    }
+
+    .writing-container {
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .titles-column {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-right: 60px;
+    }
+
+    .back-link {
+      position: fixed;
+      bottom: 40px;
+      left: 40px;
+      top: auto;
+      font-family: var(--font-secondary);
+      font-size: 1.2rem;
+      color: #fff;
+      text-decoration: none;
+      text-transform: lowercase;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      z-index: 100;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+    }
+
+    .piece-title {
+      font-family: var(--font-secondary);
+      font-weight: bold;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      text-transform: lowercase;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+    }
+
+    .piece-title:hover {
+      opacity: 0.6;
+    }
+
+    .piece-title.active {
+      opacity: 0.6;
+    }
+
+    .content-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      padding: 60px 40px;
+    }
+
+    .content-modal.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .piece-content {
+      font-family: var(--font-secondary);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      padding: 50px;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 12px;
+      color: #111;
+      font-size: 1rem;
+      max-width: 700px;
+      width: 100%;
+      max-height: 100%;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #666;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 1024px) {
+      .writing-container {
+        flex-direction: column;
+        padding: 100px 40px 40px;
+        justify-content: flex-start;
+      }
+
+      .titles-column {
+        margin-right: 0;
+        margin-bottom: 40px;
+        gap: 20px;
+      }
+
+      .content-modal {
+        padding: 40px 20px;
+      }
+
+      .piece-content {
+        padding: 40px 30px;
+      }
+
+      .piece-title {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .back-link {
+        top: 20px;
+        left: 20px;
+      }
+
+      .writing-container {
+        padding: 80px 20px 20px;
+      }
+
+      .piece-title {
+        font-size: 1.4rem;
+      }
+
+      .piece-content {
+        padding: 35px 25px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body class="writing-page">
+  <a href="index.html" class="corner-logo">SAMIR</a>
+  <a href="home.html" class="back-link">← back</a>
+
+  <div class="writing-container">
+    <div class="titles-column">
+      <a class="piece-title" onclick="showPiece('obgyn'); return false;">obgyn</a>
+      <a class="piece-title" onclick="showPiece('usedcar'); return false;">used car dealer</a>
+      <a class="piece-title" onclick="showPiece('groupie'); return false;">groupie</a>
+      <a class="piece-title" onclick="showPiece('manvswild'); return false;">man vs. wild sweepstakes</a>
+    </div>
+  </div>
+
+  <div id="modal-obgyn" class="content-modal" onclick="closeModal('modal-obgyn')">
+    <div class="piece-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('modal-obgyn')">×</span>
+<em>The hardest thing about being a male OBGYN is getting over the stigma of being a creep. The second is knowing what to do with this doohickey.</em> 
+
+Imagine you are my patient. My only patient. My goal is to make you feel as comfortable as you would with a girl doctor, or one who didn't get his medical degree in an e-mail. In the waiting room, you find a seat amongst the seven blow-up dolls with Woman's World stapled to their faces. To calm your nerves, I've diffused the most essential oil: petroleum. The hand-drawn feminist posters on the wall really impress you with their clever takes on the Fourth Wave and unorthodox use of crayon. For the first time, you feel seen. Your number is called. It is policy to refer to all our patient that way for transparency. The number is your weight. 
+
+You enter a room lined with soothing yellow wallpaper and are greeted by a female nurse. I am standing in the corner with Groucho glasses on so you don't even know I'm there. You are not put off by the fact that I am licking apple pie off my scrubs. I offer you one with 17% missing. Both you and the nurse fight for it. You win and deprive her of income this month. The nurse then conducts a normal check-up, intermittently asking you questions about your medical history and quizzing me on basic female anatomy. I fail miserably and am sent back into the corner to study some more. This time I must face the wall. 
+
+The nurse concludes your exam and writes up an Oxycontin prescription for your UTI. It needs my signature but I withhold it until you watch my one-man mariachi band perform. You try to look away. I contort my body into increasingly awkward positions to prevent you from breaking eye contact. You clap just the right amount so as not to reveal your pity. I send you on your way to take on the world and break what few glass ceilings are left.  
+
+You decide it's probably better to just go with a regular OBGYN. I shudder at the thought that tampons aren't free but this appointment was.
+    </div>
+  </div>
+
+  <div id="modal-usedcar" class="content-modal" onclick="closeModal('modal-usedcar')">
+    <div class="piece-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('modal-usedcar')">×</span>
+<em>The United States does not negotiate with terrorists but these ones were offering a sick deal on a tricked out Toyota Tacoma.</em> 
+
+Their Craigslist ad said whoever showed up to an unmarked desert hideout first had dibs. So I booked a one-way ticket to Talibanistan with a fat government check in my back pocket and a water gun loaded with Bud Light in case they tried something funny. When I got there, they told me I had to buy it on the spot. Some warlord from Darfur was on his way and offered up Daughter #4 through Daughter #9 to sweeten the deal. I couldn't get a hold of my kids because it wasn't my week to have them. 
+
+To start it off, I lowballed the terrorists with an offer of $15,000 and a passport-sized photo of my wife's ankles. When I realized they were getting angry, I yelled "Not!" and we laughed it off like a couple of pals. We were chill, so they'd only asked for $20K, the release of 15 of their closest friends held at Gitmo, and a video of me renouncing my faith. They stole my wife's picture and giggled as they passed it around. 
+
+I asked them why I shouldn't just go to their rivals who I knew had a satellite office in New Jersey. They huddled up and came back to me with my original offer plus a recap of what they missed on Glee that week. We closed the deal over dinner at Benihana, the village goat butcher. High on opium, we spent the rest of the night cursing the American government and shooting fireworks at ancient Buddhist monuments. 
+
+Just as I was about to drive home, the guys jumped on the hood and threatened to kill themselves if I left. Apparently, the whole religious extremism thing got old after the West pulled out, and hanging with me was the most fun they'd had in a while. This was convenient because I was too embarrassed to ask for an invite. My Talibuddies were so excited to take me in, they even gave me a nickname: In-fi-del. It just rolls off the tongue.
+    </div>
+  </div>
+
+  <div id="modal-groupie" class="content-modal" onclick="closeModal('modal-groupie')">
+    <div class="piece-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('modal-groupie')">×</span>
+Dear Family,
+
+You might be wondering where I've been these past nine months. No, I haven't locked myself in my room in another major bout of depression. Things are different now that I'm the groupie for all 45 performers on board this Carnival Cruise 'round the world. 
+
+Backstage for family-friendly stand-up routines, magic shows, and Jimmy Buffet tribute concerts. It surely can't get better than this. Sex? Always. Drugs? As soon as we enter international waters. Rock-n-roll? Every Tuesday night from 7-7:45 PM on the pool deck. The stories I have, oh man—how I'll exaggerate to my children that the 2010s were a blur. 
+
+Groupie life isn't just one big acid trip, though. If I'm not in tip-top shape, they'll replace me with some Double D mamacita they find at the next port. That means my cargo shorts always need to be wrinkle-free, and my tramp stamp of their faces visible at all times. I also have to keep morale high by talking performers off the deck railing. They don't tell you that reverse psychology only has about a 75% success rate. 
+
+You learn to make friends with everyone on the high seas. For example, when we passed the Horn of Africa, we picked up this Somali stowaway who said he was headed the same way we were. He had a real hijack-y aura to him at first but he's since grown on me. It's just so hard not to find it adorable when he practices his "I'm the captain now" delivery in the mirror. Overall, pretty rad dude and also now the closest thing I have to an uncle. 
+
+They didn't really have much space in the hull so I sleep in a defunct waterslide. I used to fight over the blanket with my pregnant seagull roommate every single night, but once I took her eggs to the build-your-own omelet bar, she got the message. I imagine this is what dorm life would've been like had I gone to college and not straight for 300 more miles to the Port of Miami. 
+
+Anyway, I've got to go now. The band's about to do their 90s Rap Instrumentals number, and the Under 18 Club's pushing me up against the barricade. 
+
+Love, 
+Malachi
+    </div>
+  </div>
+
+  <div id="modal-manvswild" class="content-modal" onclick="closeModal('modal-manvswild')">
+    <div class="piece-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('modal-manvswild')">×</span>
+Ever wonder who won that Man vs. Wild Sweepstakes where you could be in a real episode with Bear Grylls? I don't. It was me. I entered as a joke when I was 18, but a decade later, the Discovery Channel told me I won and was contractually obligated to comply. 
+
+I found out that Bear did all of his own stunts when I woke up barreling toward the Amazon Rainforest at terminal velocity. He gave me the reins over the parachute and told me there was no margin for error: we needed to land in a sweet spot between a piranha-infested river and a Greenpeace demonstration. We took our chances and braced for a water landing. 
+
+Before we could dry off, Bear pulled out a vial of his own semen. He explained to the viewers at home that, if you spread it on like lotion, it was as good as bug spray. He handed me a full vial with my name Sharpied on the side. When I asked how he got that, he didn't answer. 
+
+Bear said that the human body could go three weeks without food, three days without water, but it couldn't survive three hours without teamwork. This would be more believable if they hid the craft services table for the camera crew. I thought surely they wouldn't let me die out here. Bear explained that, because this was the series finale, we were no longer valuable to the network, and there was actually a much lower chance of survival.
+
+Saying that out loud suddenly made it real for Bear so I spent the next couple hours trying to cheer him up. He cried so much that he drank a bottle of urine just to cry some more. Soon came nightfall, and given all the deforestation, our only option for shelter was to climb into a beached dolphin carcass. Both of us couldn't fit inside unless he was the little spoon to my big spoon. Before we fell asleep, Bear asked me if he was the best adventurer I knew, and I said of course.
+    </div>
+  </div>
+
+  <script>
+    function showPiece(id) {
+      const modal = document.getElementById('modal-' + id);
+      const allTitles = document.querySelectorAll('.piece-title');
+      
+      allTitles.forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      const allTitles = document.querySelectorAll('.piece-title');
+      
+      modal.classList.remove('show');
+      allTitles.forEach(t => t.classList.remove('active'));
+      document.body.style.overflow = 'hidden';
+    }
+
+    function setVH() {
+      document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+    }
+    setVH();
+    window.addEventListener('resize', setVH);
+  </script>
+</body>
+</html>
