@@ -269,7 +269,45 @@
     if (!selected){
       // GRID
       const list = buildNeonList();
-      root.append(h('p',{className:'mt-4 text-neutral-300'}, 'Hover over a poster for more info. Click to see pairings.'));
+      
+      // Explanation section (collapsible)
+      const explanationOpen = getQ('about') === 'open';
+      root.append(
+        h('div', {className: 'mt-6'},
+          h('button', {
+            className: 'w-full text-left bg-neutral-800/50 border border-neutral-700 rounded-xl p-4 hover:bg-neutral-800/70 transition flex items-center justify-between group',
+            onclick: () => { setQ('about', explanationOpen ? null : 'open'); render(); }
+          },
+            h('span', {className: 'text-sm font-medium text-emerald-400'}, 'About This Project'),
+            h('span', {className: 'text-neutral-400 text-lg group-hover:text-neutral-300 transition'}, explanationOpen ? '−' : '+')
+          ),
+          explanationOpen ? h('div', {className: 'bg-neutral-800/30 border-x border-b border-neutral-700 rounded-b-xl p-5 space-y-4'},
+            h('p', {className: 'text-neutral-300 text-sm leading-relaxed'}, 
+              'I scraped Letterboxd viewing histories to see what people watch right before and after Neon films. If someone watches Film A, then a NEON film, then Film B all in a row, those films probably share some DNA. The lift scores tell you how much more likely two films are to be watched together than random chance.'
+            ),
+            h('div', {className: 'grid md:grid-cols-2 gap-4'},
+              h('div', {},
+                h('div', {className: 'text-xs font-semibold text-neutral-400 mb-2'}, 'How to read the scores:'),
+                h('ul', {className: 'text-xs text-neutral-300 space-y-1'},
+                  h('li', {}, h('span', {className: 'text-emerald-400 font-mono'}, '20x+'), ' = very strong pairing'),
+                  h('li', {}, h('span', {className: 'text-amber-400 font-mono'}, '10-20x'), ' = strong pairing'),
+                  h('li', {}, h('span', {className: 'text-neutral-400 font-mono'}, '5-10x'), ' = decent pairing')
+                )
+              ),
+              h('div', {},
+                h('div', {className: 'text-xs font-semibold text-neutral-400 mb-2'}, 'What you can do with this:'),
+                h('ul', {className: 'text-xs text-neutral-300 space-y-1'},
+                  h('li', {}, '* Find double feature pairings for screenings'),
+                  h('li', {}, '* Understand the taste of Neon audiences'),
+                  h('li', {}, '* Uncover unexpected links/associations between films')
+                )
+              )
+            )
+          ) : ''
+        )
+      );
+      
+      root.append(h('p',{className:'mt-6 text-neutral-400 text-sm'}, 'Hover for film info, click to see what people pair it with.'));
       const grid = h('div',{className:'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-6'});
       list.forEach(card=> grid.append(gridItem(card)));
       root.append(grid);
