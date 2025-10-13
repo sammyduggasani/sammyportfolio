@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Neon Double Feature</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{}}};</script>
+  <style>
+    :root { color-scheme: dark; }
+    body, button, input, textarea, select {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .line-clamp-2{-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .tooltip{position:fixed;z-index:50;pointer-events:none;max-width:360px;background:#18181b;color:#fff;border:1px solid #3f3f46;border-radius:12px;padding:10px 12px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+    .tooltip .k{color:#a3a3a3}
+    .link-underline { text-decoration: underline; text-underline-offset: 4px; }
+    .logo-white { filter: brightness(0) invert(1); }
+  </style>
+</head>
+<body class="min-h-screen bg-neutral-900 text-white">
+  <div id="root" class="max-w-6xl mx-auto px-6 py-10"></div>
+  <div id="tt" class="tooltip hidden"></div>
+
+  <script>
+  // --- helpers ---
+  const $ = sel => document.querySelector(sel);
+  const h = (t, p={}, ...c)=>{const e=document.createElement(t);Object.assign(e,p);c.flat().forEach(x=>e.append(x?.nodeType?x:document.createTextNode(x)));return e;}
+  const getQ = k => new URL(location).searchParams.get(k);
+  const setQ = (k,v)=>{const u=new URL(location); v!=null && v!==''?u.searchParams.set(k,v):u.searchParams.delete(k); history.pushState({},'',u)}
+  const parseCSV = (txt)=>{
+    const lines = txt.split(/\r?\n/).filter(Boolean); if(!lines.length) return [];
+    const head = lines[0].split(','); return lines.slice(1).map(line=>{
+      let inQ=false,buf="",out=[]; for(const ch of line){ if(ch==='\"'){inQ=!inQ;continue}
+        if(ch===','&&!inQ){out.push(buf);buf="";continue} buf+=ch } out.push(buf);
+      const o={}; head.forEach((h,i)=>o[h.trim()]=(out[i]??'').trim()); return o;
+    });
+  };
+  const simColor = s => s>=20?'bg-emerald-500':(s>=10?'bg-amber-500':'bg-zinc-400');
+
+  // TMDB size helpers
+  function tmdbSize(url, target="w342"){
+    if(!url) return url;
+    return url.replace(/https?:\/\/image\.tmdb\.org\/t\/p\/(w\d+|original)\//, `https://image.tmdb.org/t/p/${target}/`);
+  }
+  function heroSrcSet(url){ const s1=tmdbSize(url,"w500"), s2=tmdbSize(url,"w780"); return `${s1} 1x, ${s2} 2x`; }
+
+  // ---- Directors: ONLY true directors (skip producers, etc.)
+  function getDirectors(meta){
+    let names = Array.isArray(meta?.directors) ? meta.directors.slice() : [];
+    const crew = meta?.credits?.crew || meta?.crew || [];
+    if (!names.length && Array.isArray(crew) && crew.length){
+      names = crew
+        .filter(p => (p?.job || '').toLowerCase().includes('director'))
+        .map(p => p.name)
+        .filter(Boolean);
+    }
+    const seen = new Set(); const clean = [];
+    for (const n of names){
+      const key = (n||'').trim().toLowerCase();
+      if (key && !seen.has(key)){ seen.add(key); clean.push((n||'').trim()); }
+    }
+    return clean;
+  }
+  function cleanDirectors(arr){
+    if(!Array.isArray(arr) || !arr.length) return '';
+    const shown = arr.slice(0,2);
+    const extra = arr.length - shown.length;
+    return shown.join(', ') + (extra>0 ? ` (+${extra} more)` : '');
+  }
+
+  // --- tooltip ---
+  const tt = $('#tt');
+  function showTTNode(node, x, y){
+    tt.innerHTML = ""; tt.append(node); tt.classList.remove('hidden');
+    const rect = tt.getBoundingClientRect(), pad=12;
+    let nx = Math.min(Math.max(pad, x + 14), window.innerWidth - rect.width - pad);
+    let ny = Math.min(Math.max(pad, y + 14), window.innerHeight - rect.height - pad);
+    tt.style.left = nx + 'px'; tt.style.top = ny + 'px';
+  }
+  function hideTT(){ tt.classList.add('hidden'); }
+
+  function metaBlock(meta, opts={showPoster:false, posterUrl:null}){
+    const year = meta?.year ? ` (${meta.year})` : '';
+    const genres = (meta?.genres?.length ? meta.genres.slice(0,4).join(' • ') : '');
+    const rt = meta?.runtime ? `${meta.runtime} min` : '';
+    const rate = meta?.vote_average ? `${Number(meta.vote_average).toFixed(1)} / 10` : '';
+    const directors = cleanDirectors(getDirectors(meta));
+    const cast = (meta?.cast?.length ? meta.cast.slice(0,5).join(', ') : '');
+
+    const text = h('div',{},
+      h('div',{className:'text-sm font-semibold'}, (meta?.title||meta?.query_title||'' ) + year),
+      h('div',{className:'text-xs text-neutral-300 mt-0.5'}, [genres, rt].filter(Boolean).join(' • ')),
+      (rate ? h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'TMDB: '), rate) : ''),
+      (directors ? h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'Director: '), directors) : ''),
+      (cast ? h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'Cast: '), cast) : ''),
+      (meta?.overview ? h('div',{className:'text-xs mt-2 text-neutral-300'}, meta.overview.length>240? meta.overview.slice(0,240)+'…' : meta.overview) : '')
+    );
+
+    if (opts.showPoster && opts.posterUrl){
+      const wrap = h('div',{className:'flex gap-3 items-start'});
+      wrap.append(
+        (()=>{ const img=document.createElement('img'); img.src=tmdbSize(opts.posterUrl,'w154');
+                img.alt=meta?.title||''; img.width=70; img.height=105;
+                img.className='rounded-md border border-neutral-700 object-cover w-[70px] h-[105px]'; return img; })(),
+        h('div',{className:'flex-1 min-w-0'}, text)
+      );
+      return wrap;
+    }
+    return text;
+  }
+
+  // --- data loads ---
+  async function loadJSON(path){ const r=await fetch(path,{cache:'no-store'}); if(!r.ok) return {}; return r.json(); }
+  async function loadSims(){
+    const r = await fetch('/data/top_similar_per_neon_lift.csv',{cache:'no-store'});
+    if (!r.ok) return [];
+    return parseCSV(await r.text());
+  }
+
+  // --- UI helpers ---
+  function Poster(url, alt, cls='', srcset=''){
+    return url
+      ? (()=>{ const img=document.createElement('img'); img.src=url; if(srcset) img.setAttribute('srcset',srcset);
+               img.alt=alt||''; img.loading='lazy'; img.decoding='async';
+               img.className=`object-cover rounded-lg border border-neutral-700 ${cls}`; return img; })()
+      : h('div',{className:`rounded-lg bg-neutral-800 border border-neutral-700 ${cls}`});
+  }
+
+  function gridItem(card){
+    const btn = h('button',{className:'text-left group relative',
+      onmouseenter:(e)=>{ if(!card.meta) return; showTTNode(metaBlock(card.meta,{showPoster:false}), e.clientX, e.clientY); },
+      onmousemove:(e)=>{ if(tt.classList.contains('hidden')) return; showTTNode(metaBlock(card.meta,{showPoster:false}), e.clientX, e.clientY); },
+      onmouseleave:()=> hideTT(),
+      onclick:()=>{ setQ('film',card.slug); render(); }
+    });
+    btn.append(
+      h('div',{className:'relative'},
+        Poster(tmdbSize(card.poster,'w342'), card.title, 'w-full aspect-[2/3]'),
+        h('div',{className:'absolute inset-0 ring-0 group-hover:ring-2 ring-emerald-400/60 rounded-lg transition'})
+      ),
+      h('div',{className:'mt-2'},
+        h('div',{className:'font-medium leading-tight line-clamp-2'}, card.title),
+        h('div',{className:'text-xs text-neutral-400'}, card.year??'—')
+      )
+    );
+    return btn;
+  }
+
+  function recRow(rec, posters, metaMap){
+    const meta = metaMap[rec.slug];
+    const lbUrl = `https://letterboxd.com/film/${rec.slug}/`;
+    const maxScore = 100; // adjust based on your lift scores
+    const barWidth = Math.max(4, Math.min(100, (rec.score / maxScore) * 100));
+    
+    const row = h('div',{className:'flex items-center gap-4 py-3 cursor-pointer hover:bg-neutral-800/60 rounded-lg px-2 -mx-2',
+      onmouseenter:(e)=>{ if(meta) showTTNode(metaBlock(meta,{showPoster:true, posterUrl:posters[rec.slug]}), e.clientX, e.clientY); },
+      onmousemove:(e)=>{ if(meta && !tt.classList.contains('hidden')) showTTNode(metaBlock(meta,{showPoster:true, posterUrl:posters[rec.slug]}), e.clientX, e.clientY); },
+      onmouseleave: hideTT,
+      onclick:()=>{ window.open(lbUrl, '_blank', 'noopener'); }
+    });
+    row.append(
+      h('div',{className:'w-5 shrink-0 text-xs tabular-nums text-neutral-300'}, rec.rank),
+      Poster(tmdbSize(posters[rec.slug],'w154'), rec.title, 'w-10 h-14'),
+      h('div',{className:'flex-1 min-w-0'},
+        h('div',{className:'flex items-center justify-between gap-3'},
+          h('div',{className:'font-medium truncate'}, rec.title),
+          h('div',{className:'text-xs tabular-nums text-neutral-300'}, `${rec.score.toFixed(1)}x`)
+        ),
+        h('div',{className:'h-2 bg-neutral-700 rounded mt-1'},
+          h('div',{className:`h-2 rounded ${simColor(rec.score)}`, style:`width:${barWidth}%`})
+        )
+      )
+    );
+    return row;
+  }
+
+  // --- state + render ---
+  let META={}, POSTERS={}, SIMS_DATA=[], RESULTS={}, RESULTS_BY_SLUG={};
+
+  function buildNeonList(){
+    const slugs = Array.from(new Set(SIMS_DATA.map(r=>r.neon_slug)));
+    const cards = slugs.map(slug=>{
+      const m = META[slug]||{};
+      return {
+        slug,
+        title: m.title || m.query_title || slug,
+        year: m.year,
+        poster: POSTERS[slug],
+        meta: m
+      };
+    });
+    cards.sort((a,b)=> (b.year||0)-(a.year||0) || (a.title||'').localeCompare(b.title||''));
+    return cards;
+  }
+
+  function getDetail(slug){
+    const m = META[slug]||{};
+    const rows = SIMS_DATA.filter(r=>r.neon_slug===slug);
+    rows.sort((a,b)=>(+a.rank||0)-(+b.rank||0));
+    const recs = rows.slice(0,10).map((r,i)=>({ 
+      rank: i+1, 
+      slug: r.rec_slug, 
+      title: r.rec_title, 
+      score: +r.score 
+    }));
+    const filmStats = RESULTS_BY_SLUG[slug] || {};
+    return { 
+      slug, 
+      title: m.title||m.query_title||slug, 
+      year: m.year, 
+      poster: POSTERS[slug], 
+      recs, 
+      meta: m, 
+      stats: filmStats 
+    };
+  }
+
+  function samplePathsPanel(d){
+    const film = RESULTS_BY_SLUG[d.slug] || {};
+    const rows = (film.qualified_reviewers || []).slice(0,6);
+    const pill = (t)=> h('span',{className:'px-2 py-0.5 rounded-full bg-neutral-700 border border-neutral-600 text-xs'}, t);
+    const arrow = ()=> h('span',{className:'text-neutral-500 text-xs'}, '→');
+    const cards = rows.map(r=>{
+      const parts = [
+        ...r.before.map(b=>pill(b.title)),
+        h('span',{className:'px-2 py-0.5 rounded-full bg-emerald-600/20 border border-emerald-500/40 text-xs text-emerald-200'}, d.title),
+        ...r.after.map(a=>pill(a.title))
+      ];
+      const seq = [];
+      parts.forEach((p,i)=>{ seq.push(p); if(i<parts.length-1) seq.push(arrow()); });
+      return h('div',{className:'bg-neutral-800 border border-neutral-700 rounded-xl p-3'},
+        h('div',{className:'text-xs text-neutral-400 mb-2'}, `@${r.username}`),
+        h('div',{className:'flex flex-wrap gap-1.5 items-center'}, ...seq)
+      );
+    });
+    return h('section',{className:'mt-6 bg-neutral-800 border border-neutral-700 rounded-2xl p-5'},
+      h('h3',{className:'text-lg font-semibold'},'Sample user viewing paths'),
+      rows.length ? h('div',{className:'grid md:grid-cols-2 gap-3 mt-3'}, ...cards)
+                  : h('div',{className:'text-sm text-neutral-400 mt-2'}, 'No cached paths available.')
+    );
+  }
+
+  // --- Main render ---
+  function render(){
+    const root = $('#root'); root.innerHTML=''; const selected = getQ('film');
+
+    // Header: brand
+    const header = h('div', { className: 'flex items-center justify-between' });
+    const brandBtn = h(
+      'button',
+      {
+        className: 'group flex items-center gap-2 md:gap-3',
+        onclick: () => { setQ('film', null); render(); },
+        title: 'Home',
+      },
+      (() => {
+        const img = document.createElement('img');
+        img.src = '/images/neon_logo.svg';
+        img.alt = 'Neon';
+        img.className = 'h-8 md:h-10 opacity-90 group-hover:opacity-100 transition logo-white';
+        return img;
+      })(),
+      h('span', { className: 'text-2xl md:text-3xl font-medium leading-none tracking-tight opacity-90 group-hover:opacity-100 transition' }, 'Double Feature')
+    );
+    header.append(brandBtn);
+    root.append(header);
+
+    if (!selected){
+      // GRID
+      const list = buildNeonList();
+      root.append(h('p',{className:'mt-4 text-neutral-300'}, 'Hover over a poster for more info. Click to see pairings.'));
+      const grid = h('div',{className:'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-6'});
+      list.forEach(card=> grid.append(gridItem(card)));
+      root.append(grid);
+    } else {
+      // DETAIL
+      const d = getDetail(selected);
+      root.append(h('button',{className:'mt-4 text-sm text-neutral-300 hover:text-white link-underline', onclick:()=>{ setQ('film',null); render(); }}, '← Back to Neon films'));
+
+      const lbUrl = `https://letterboxd.com/film/${d.slug}/`;
+      const hero = h('section',{className:'mt-6 grid grid-cols-1 md:grid-cols-[220px,1fr] gap-6 items-start'});
+      hero.append(
+        Poster(tmdbSize(d.poster,'w500'), d.title, 'w-[220px] h-[330px]', heroSrcSet(d.poster)),
+        h('div',{},
+          h('h2',{className:'text-2xl md:text-3xl font-semibold'},
+            h('a',{href: lbUrl, target:'_blank', rel:'noopener', className:'hover:opacity-90 transition'},
+              d.title, d.year? h('span',{className:'text-neutral-400 text-xl'}, ` (${d.year})`):''
+            )
+          ),
+          (()=>{
+            const m=d.meta||{};
+            const genres=(m.genres?.length? m.genres.slice(0,5).join(' • '):'');
+            const rt=m.runtime? `${m.runtime} min`:'';
+            const rate=m.vote_average? `${Number(m.vote_average).toFixed(1)} / 10`:'';
+            const directors=cleanDirectors(getDirectors(m));
+            const cast=(m.cast?.length? m.cast.slice(0,8).join(', '):'');
+            return h('div',{className:'mt-3 text-sm text-neutral-300 space-y-2'},
+              h('div',{}, [genres, rt, rate].filter(Boolean).join(' • ')),
+              directors ? h('div',{}, h('span',{className:'text-neutral-400'},'Director: '), directors) : '',
+              cast ? h('div',{}, h('span',{className:'text-neutral-400'},'Cast: '), cast) : '',
+              m.overview ? h('div',{className:'text-neutral-200 mt-2'}, m.overview) : ''
+            );
+          })()
+        )
+      );
+      root.append(hero);
+
+      // Recommendations
+      const box = h('section',{className:'mt-10 bg-neutral-800 border border-neutral-700 rounded-2xl overflow-hidden'});
+      box.append(
+        h('div',{className:'px-5 py-4 border-b border-neutral-700 flex items-center justify-between'},
+          h('h3',{className:'text-xl'}, 'What Letterboxd Users Are Pairing It With'),
+          h('div',{className:'text-xs text-neutral-400'}, 'Lift scores = correlation strength')
+        ),
+        h('div',{className:'p-5 divide-y divide-neutral-700'},
+          ...d.recs.map(r=> recRow(r, POSTERS, META))
+        )
+      );
+      root.append(box);
+      root.append(samplePathsPanel(d));
+    }
+
+    // footer
+    root.append(h('footer',{className:'text-neutral-400 text-xs mt-10'}, 'Posters/metadata © TMDB. Lift similarity from reviewer-path co-occurrence. Sample sizes are small, results reflect this. This tool is a prototype and I hope to be able to work with an enterprise Letterboxd API account to achieve more accurate data.'));
+  }
+
+  // bootstrap
+  (async function init(){
+    const [meta, posters, sims, results] = await Promise.all([
+      loadJSON('/data/tmdb_movies.json'),
+      loadJSON('/data/posters.json'),
+      loadSims(),
+      loadJSON('/data/Neon_review_paths.json')
+    ]);
+
+    META = meta || {};
+    POSTERS = Object.fromEntries(Object.entries(posters||{}).map(([k,v])=>[k, tmdbSize(v,'w342')]));
+    SIMS_DATA = sims;
+    RESULTS = results || {};
+
+    // Build quick lookup by slug for film stats
+    RESULTS_BY_SLUG = {};
+    for (const f of (RESULTS.films||[])){
+      RESULTS_BY_SLUG[f.film_slug] = f;
+    }
+
+    render();
+    window.addEventListener('popstate', render);
+    window.addEventListener('scroll', hideTT, {passive:true});
+  })();
+  </script>
+</body>
+</html>
