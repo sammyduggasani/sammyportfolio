@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHATSAPP IMAGE ANALYSIS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.2;
+            overflow-x: hidden;
+        }
+        
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .header {
+            border-bottom: 8px solid #fff;
+            padding: 3rem 2rem 2rem;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #fff 0px,
+                #fff 20px,
+                transparent 20px,
+                transparent 40px
+            );
+        }
+        
+        h1 {
+            font-size: clamp(2rem, 10vw, 8rem);
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 0.85;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            word-wrap: break-word;
+        }
+        
+        h1 span {
+            display: block;
+        }
+        
+        .subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+            margin-top: 1.5rem;
+        }
+        
+        .stats-brutal {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0;
+            margin-top: 2rem;
+            border: 4px solid #fff;
+        }
+        
+        .stat-brutal {
+            border: 2px solid #fff;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: #000;
+            position: relative;
+        }
+        
+        .stat-brutal:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .stat-number-brutal {
+            font-size: 4rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .stat-label-brutal {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .filters-section {
+            padding: 3rem 0 2rem;
+            position: sticky;
+            top: 0;
+            background: #000;
+            z-index: 100;
+            border-bottom: 4px solid #fff;
+            margin-bottom: 3rem;
+        }
+        
+        .filters-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 0;
+            flex-wrap: wrap;
+            border: 4px solid #fff;
+        }
+        
+        .filter-btn {
+            padding: 1rem 2rem;
+            background: #000;
+            color: #fff;
+            border: 2px solid #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.1s ease;
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+        }
+        
+        .filter-btn:hover {
+            background: #fff;
+            color: #000;
+            transform: translate(4px, 4px);
+        }
+        
+        .filter-btn.active {
+            background: #fff;
+            color: #000;
+        }
+        
+        .filter-btn.active::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #fff;
+        }
+        
+        .count {
+            font-family: 'Space Mono', monospace;
+            margin-left: 0.5rem;
+            opacity: 0.6;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 0;
+            margin-bottom: 4rem;
+        }
+        
+        .image-card {
+            background: #000;
+            border: 4px solid #fff;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            position: relative;
+            aspect-ratio: 1;
+        }
+        
+        .image-card:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 #fff;
+        }
+        
+        .image-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+        
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.2s ease;
+            filter: grayscale(0.3) contrast(1.2);
+        }
+        
+        .image-card:hover .image-wrapper img {
+            filter: grayscale(0) contrast(1.1);
+        }
+        
+        .image-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            border-top: 4px solid #fff;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.2s ease;
+        }
+        
+        .image-card:hover .image-info {
+            transform: translateY(0);
+        }
+        
+        .category-tag {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.75rem;
+        }
+        
+        .score-container {
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .score-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0.5;
+            margin-bottom: 0.25rem;
+        }
+        
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .score-bar {
+            height: 8px;
+            background: #333;
+            margin-top: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+        
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0;
+        }
+        
+        .lightbox-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: relative;
+        }
+        
+        .lightbox-image-side {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            border-right: 4px solid #fff;
+        }
+        
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border: 4px solid #fff;
+        }
+        
+        .lightbox-info-side {
+            width: 400px;
+            background: #000;
+            padding: 4rem 3rem;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.1s ease;
+        }
+        
+        .close-btn:hover {
+            transform: translate(4px, 4px);
+            box-shadow: -4px -4px 0 #fff;
+        }
+        
+        .lightbox-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        
+        .info-row {
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 1rem;
+        }
+        
+        .info-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        
+        .confidence-brutal {
+            margin-top: 2rem;
+            padding: 2rem;
+            border: 4px solid #fff;
+            text-align: center;
+        }
+        
+        .confidence-brutal .info-label {
+            margin-bottom: 1rem;
+        }
+        
+        .confidence-value-brutal {
+            font-size: 5rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            line-height: 1;
+        }
+        
+        .confidence-bar-brutal {
+            margin-top: 1rem;
+            height: 20px;
+            background: #fff;
+        }
+        
+        .confidence-fill-brutal {
+            height: 100%;
+            background: #000;
+            border-right: 4px solid #fff;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .lightbox-content {
+                flex-direction: column;
+            }
+            
+            .lightbox-image-side {
+                border-right: none;
+                border-bottom: 4px solid #fff;
+                padding: 2rem;
+            }
+            
+            .lightbox-info-side {
+                width: 100%;
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 1rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .filter-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .stats-brutal {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    
+    <div class="header">
+        <div class="container">
+            <h1>
+                <span>POLITICAL</span>
+                <span>WHATSAPP</span>
+                <span>IMAGE</span>
+                <span>ANALYSIS</span>
+            </h1>
+            <div class="subtitle">IMAGE CLASSIFICATION USING CLIP // 1000+ IMAGES</div>
+            <div class="stats-brutal" id="hero-stats"></div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="filters-section">
+            <div class="filters-label">[ FILTER BY CATEGORY ]</div>
+            <div class="filters" id="filters"></div>
+        </div>
+        
+        <div class="grid" id="grid"></div>
+        <div class="loading" id="loading-more" style="display: none;">LOADING MORE...</div>
+    </div>
+    
+    <div id="lightbox"></div>
+    
+    <script>
+        let images = [];
+        let activeCategory = 'All';
+        let categories = {};
+        let selectedImage = null;
+        let loading = true;
+        let visibleImages = [];
+        let loadedCount = 0;
+        const LOAD_INCREMENT = 50;
+        
+        fetch('images_data.json')
+            .then(response => response.json())
+            .then(data => {
+                images = data.images;
+                categories = data.categories;
+                loading = false;
+                renderHeroStats();
+                renderFilters();
+                loadMoreImages();
+                
+                window.addEventListener('scroll', () => {
+                    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) {
+                        loadMoreImages();
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading images:', error);
+                document.getElementById('grid').innerHTML = '<div class="loading">ERROR: IMAGES_DATA.JSON NOT FOUND</div>';
+            });
+        
+        function renderHeroStats() {
+            const totalImages = images.length;
+            const totalCategories = Object.keys(categories).length;
+            const avgScore = (images.reduce((sum, img) => sum + img.score, 0) / images.length * 100).toFixed(0);
+            
+            document.getElementById('hero-stats').innerHTML = `
+                <div class="stat-brutal">
+                    <span class="stat-number-brutal">${totalImages}</span>
+                    <span class="stat-label-brutal">IMAGES</span>
+                </div>
+                <div class="stat-brutal">
+                    <span class="stat-number-brutal">${totalCategories}</span>
+                    <span class="stat-label-brutal">CATEGORIES</span>
+                </div>
+                <div class="stat-brutal">
+                    <span class="stat-number-brutal">${avgScore}%</span>
+                    <span class="stat-label-brutal">CONFIDENCE</span>
+                </div>
+            `;
+        }
+        
+        function renderFilters() {
+            let html = `
+                <button class="filter-btn active" onclick="selectCategory('All')">
+                    ALL <span class="count">[${images.length}]</span>
+                </button>
+            `;
+            
+            const sortedCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
+            
+            for (const [cat, count] of sortedCategories) {
+                html += `
+                    <button class="filter-btn" onclick="selectCategory('${cat}')">
+                        ${cat.toUpperCase()} <span class="count">[${count}]</span>
+                    </button>
+                `;
+            }
+            
+            document.getElementById('filters').innerHTML = html;
+        }
+        
+        function loadMoreImages() {
+            const filtered = getFilteredImages();
+            const newCount = Math.min(loadedCount + LOAD_INCREMENT, filtered.length);
+            
+            if (newCount > loadedCount) {
+                visibleImages = filtered.slice(0, newCount);
+                loadedCount = newCount;
+                renderGrid();
+                
+                document.getElementById('loading-more').style.display = 
+                    loadedCount < filtered.length ? 'block' : 'none';
+            }
+        }
+        
+        function getFilteredImages() {
+            return activeCategory === 'All' 
+                ? images 
+                : images.filter(img => img.display_category === activeCategory);
+        }
+        
+        function selectCategory(cat) {
+            activeCategory = cat;
+            loadedCount = 0;
+            visibleImages = [];
+            document.getElementById('grid').innerHTML = '';
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.filter-btn').classList.add('active');
+            
+            loadMoreImages();
+        }
+        
+        function renderGrid() {
+            let html = '';
+            
+            for (let i = 0; i < visibleImages.length; i++) {
+                const image = visibleImages[i];
+                const scorePercent = (image.score * 100).toFixed(0);
+                
+                html += `
+                    <div class="image-card" onclick='openLightbox(${JSON.stringify(image).replace(/'/g, "&#39;")})'>
+                        <div class="image-wrapper">
+                            <img src="${image.url}" alt="${image.display_category}" loading="lazy" />
+                        </div>
+                        <div class="image-info">
+                            <div class="category-tag">${image.display_category.toUpperCase()}</div>
+                            <div class="score-container">
+                                <div class="score-label">CONFIDENCE</div>
+                                <div class="score-display">${scorePercent}%</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: ${scorePercent}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('grid').innerHTML = html;
+        }
+        
+        function openLightbox(image) {
+            selectedImage = image;
+            const scorePercent = (image.score * 100).toFixed(1);
+            
+            document.getElementById('lightbox').innerHTML = `
+                <div class="lightbox" onclick="closeLightbox()">
+                    <div class="lightbox-content" onclick="event.stopPropagation()">
+                        <div class="lightbox-image-side">
+                            <img src="${image.url}" alt="${image.display_category}" />
+                        </div>
+                        <div class="lightbox-info-side">
+                            <button class="close-btn" onclick="closeLightbox()">× CLOSE</button>
+                            
+                            <div class="lightbox-title">${image.display_category.toUpperCase()}</div>
+                            
+                            <div class="info-row">
+                                <div class="info-label">FILENAME</div>
+                                <div class="info-value">${image.filename}</div>
+                            </div>
+                            
+                            <div class="info-row">
+                                <div class="info-label">CATEGORY</div>
+                                <div class="info-value">${image.category}</div>
+                            </div>
+                            
+                            <div class="confidence-brutal">
+                                <div class="info-label">AI CONFIDENCE SCORE</div>
+                                <div class="confidence-value-brutal">${scorePercent}%</div>
+                                <div class="confidence-bar-brutal">
+                                    <div class="confidence-fill-brutal" style="width: ${100 - scorePercent}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            selectedImage = null;
+            document.getElementById('lightbox').innerHTML = '';
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && selectedImage) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
