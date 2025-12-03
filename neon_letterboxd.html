@@ -213,7 +213,7 @@
     const pct = (pairing.gateway_probability * 100).toFixed(1);
     const globalPct = (pairing.global_probability * 100).toFixed(1);
     const barWidth = Math.max(4, Math.min(100, lift * 25)); // Scale lift to bar width
-    const slug = pairing.paired_slug || titleToSlug(pairing.paired_film);
+    const slug = meta?.slug || pairing.paired_slug || titleToSlug(pairing.paired_film);
     const lbUrl = `https://letterboxd.com/film/${slug}/`;
 
     const row = h('div',{className:'flex items-center gap-4 py-3 cursor-pointer hover:bg-neutral-800/60 rounded-lg px-2 -mx-2 transition',
