@@ -1,0 +1,632 @@
+[
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "Bugonia (2025)",
+    "count": 86,
+    "total_users": 986,
+    "gateway_probability": 0.0872210953346856,
+    "global_probability": 0.18663516706041175,
+    "lift": 0.46733472961423767
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "Frankenstein (2025)",
+    "count": 81,
+    "total_users": 986,
+    "gateway_probability": 0.0821501014198783,
+    "global_probability": 0.11846101923725953,
+    "lift": 0.6934779216726479
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "Die My Love (2025)",
+    "count": 39,
+    "total_users": 986,
+    "gateway_probability": 0.03955375253549696,
+    "global_probability": 0.043536955788052646,
+    "lift": 0.908509835369593
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "It Was Just an Accident (2025)",
+    "count": 34,
+    "total_users": 986,
+    "gateway_probability": 0.034482758620689655,
+    "global_probability": 0.061424232197097535,
+    "lift": 0.5613868889730959
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "One Battle After Another (2025)",
+    "count": 28,
+    "total_users": 986,
+    "gateway_probability": 0.028397565922920892,
+    "global_probability": 0.0560242996962538,
+    "lift": 0.5068794447567144
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "Resurrection (2025)",
+    "count": 22,
+    "total_users": 986,
+    "gateway_probability": 0.02231237322515213,
+    "global_probability": 0.016874789065136685,
+    "lift": 1.3222312373225151
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "Nouvelle Vague (2025)",
+    "count": 22,
+    "total_users": 986,
+    "gateway_probability": 0.02231237322515213,
+    "global_probability": 0.017549780627742154,
+    "lift": 1.2713761897331877
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "If I Had Legs I'd Kick You (2025)",
+    "count": 20,
+    "total_users": 986,
+    "gateway_probability": 0.02028397565922921,
+    "global_probability": 0.03138710766115423,
+    "lift": 0.6462518266483457
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "Kontinental '25 (2025)",
+    "count": 19,
+    "total_users": 986,
+    "gateway_probability": 0.019269776876267748,
+    "global_probability": 0.00641241984475194,
+    "lift": 3.0050709939148073
+  },
+  {
+    "neon_film": "Dracula (2025)",
+    "paired_film": "The Secret Agent (2025)",
+    "count": 18,
+    "total_users": 986,
+    "gateway_probability": 0.018255578093306288,
+    "global_probability": 0.015187310158623017,
+    "lift": 1.202028397565923
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "Bugonia (2025)",
+    "count": 146,
+    "total_users": 997,
+    "gateway_probability": 0.1464393179538616,
+    "global_probability": 0.18663516706041175,
+    "lift": 0.7846287506280142
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "Train Dreams (2025)",
+    "count": 81,
+    "total_users": 997,
+    "gateway_probability": 0.08124373119358075,
+    "global_probability": 0.03509956125548431,
+    "lift": 2.314665149294036
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "Wicked: For Good (2025)",
+    "count": 68,
+    "total_users": 997,
+    "gateway_probability": 0.06820461384152457,
+    "global_probability": 0.022949713128585892,
+    "lift": 2.971915747241725
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "Frankenstein (2025)",
+    "count": 53,
+    "total_users": 997,
+    "gateway_probability": 0.05315947843530592,
+    "global_probability": 0.11846101923725953,
+    "lift": 0.44875081083706964
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "If I Had Legs I'd Kick You (2025)",
+    "count": 45,
+    "total_users": 997,
+    "gateway_probability": 0.04513540621865597,
+    "global_probability": 0.03138710766115423,
+    "lift": 1.438023748665351
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "Blue Moon (2025)",
+    "count": 44,
+    "total_users": 997,
+    "gateway_probability": 0.044132397191574725,
+    "global_probability": 0.028349645629429633,
+    "lift": 1.5567177723647132
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "After the Hunt (2025)",
+    "count": 44,
+    "total_users": 997,
+    "gateway_probability": 0.044132397191574725,
+    "global_probability": 0.014849814377320284,
+    "lift": 2.971915747241725
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "No Other Choice (2025)",
+    "count": 39,
+    "total_users": 997,
+    "gateway_probability": 0.03911735205616851,
+    "global_probability": 0.05231184610192373,
+    "lift": 0.7477723493059825
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "One Battle After Another (2025)",
+    "count": 30,
+    "total_users": 997,
+    "gateway_probability": 0.03009027081243731,
+    "global_probability": 0.0560242996962538,
+    "lift": 0.5370932073328418
+  },
+  {
+    "neon_film": "Urchin (2025)",
+    "paired_film": "Zootopia 2 (2025)",
+    "count": 28,
+    "total_users": 997,
+    "gateway_probability": 0.028084252758274825,
+    "global_probability": 0.009449881876476544,
+    "lift": 2.971915747241725
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "The Mastermind (2025)",
+    "count": 50,
+    "total_users": 991,
+    "gateway_probability": 0.050454086781029264,
+    "global_probability": 0.07391157610529868,
+    "lift": 0.6826276672702727
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Bugonia (2025)",
+    "count": 48,
+    "total_users": 991,
+    "gateway_probability": 0.04843592330978809,
+    "global_probability": 0.18663516706041175,
+    "lift": 0.2595219543705282
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Dead Man's Wire (2025)",
+    "count": 46,
+    "total_users": 991,
+    "gateway_probability": 0.04641775983854692,
+    "global_probability": 0.015524805939925751,
+    "lift": 2.9899091826437942
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Father Mother Sister Brother (2025)",
+    "count": 46,
+    "total_users": 991,
+    "gateway_probability": 0.04641775983854692,
+    "global_probability": 0.04994937563280459,
+    "lift": 0.9292960973082063
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Blue Moon (2025)",
+    "count": 40,
+    "total_users": 991,
+    "gateway_probability": 0.04036326942482341,
+    "global_probability": 0.028349645629429633,
+    "lift": 1.4237662774494257
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Die My Love (2025)",
+    "count": 38,
+    "total_users": 991,
+    "gateway_probability": 0.03834510595358224,
+    "global_probability": 0.043536955788052646,
+    "lift": 0.8807484413989471
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Frankenstein (2025)",
+    "count": 29,
+    "total_users": 991,
+    "gateway_probability": 0.029263370332996974,
+    "global_probability": 0.11846101923725953,
+    "lift": 0.24702953360874655
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "If I Had Legs I'd Kick You (2025)",
+    "count": 28,
+    "total_users": 991,
+    "gateway_probability": 0.028254288597376387,
+    "global_probability": 0.03138710766115423,
+    "lift": 0.900187710903508
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Christy (2025)",
+    "count": 27,
+    "total_users": 991,
+    "gateway_probability": 0.027245206861755803,
+    "global_probability": 0.00911238609517381,
+    "lift": 2.9899091826437942
+  },
+  {
+    "neon_film": "Erupcja (2025)",
+    "paired_film": "Gorgon\u00e0 (2025)",
+    "count": 26,
+    "total_users": 991,
+    "gateway_probability": 0.026236125126135216,
+    "global_probability": 0.008774890313871077,
+    "lift": 2.989909182643794
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "Bugonia (2025)",
+    "count": 66,
+    "total_users": 981,
+    "gateway_probability": 0.0672782874617737,
+    "global_probability": 0.18663516706041175,
+    "lift": 0.36048022739463914
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "Frankenstein (2025)",
+    "count": 39,
+    "total_users": 981,
+    "gateway_probability": 0.039755351681957186,
+    "global_probability": 0.11846101923725953,
+    "lift": 0.3355985955374335
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "One Battle After Another (2025)",
+    "count": 33,
+    "total_users": 981,
+    "gateway_probability": 0.03363914373088685,
+    "global_probability": 0.0560242996962538,
+    "lift": 0.6004384510519141
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "Nouvelle Vague (2025)",
+    "count": 30,
+    "total_users": 981,
+    "gateway_probability": 0.03058103975535168,
+    "global_probability": 0.017549780627742154,
+    "lift": 1.7425311691366736
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "It Was Just an Accident (2025)",
+    "count": 27,
+    "total_users": 981,
+    "gateway_probability": 0.027522935779816515,
+    "global_probability": 0.061424232197097535,
+    "lift": 0.44807944349228757
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "Train Dreams (2025)",
+    "count": 23,
+    "total_users": 981,
+    "gateway_probability": 0.023445463812436288,
+    "global_probability": 0.03509956125548431,
+    "lift": 0.6679702815023915
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "No Other Choice (2025)",
+    "count": 21,
+    "total_users": 981,
+    "gateway_probability": 0.021406727828746176,
+    "global_probability": 0.05231184610192373,
+    "lift": 0.4092137713327414
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "Father Mother Sister Brother (2025)",
+    "count": 20,
+    "total_users": 981,
+    "gateway_probability": 0.020387359836901122,
+    "global_probability": 0.04994937563280459,
+    "lift": 0.4081604540320137
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "What Does That Nature Say to You (2025)",
+    "count": 18,
+    "total_users": 981,
+    "gateway_probability": 0.01834862385321101,
+    "global_probability": 0.006074924063449207,
+    "lift": 3.0203873598369015
+  },
+  {
+    "neon_film": "Kontinental \u201925 (2025)",
+    "paired_film": "Sir\u0101t (2025)",
+    "count": 18,
+    "total_users": 981,
+    "gateway_probability": 0.01834862385321101,
+    "global_probability": 0.03813702328720891,
+    "lift": 0.48112365023950643
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "Bugonia (2025)",
+    "count": 79,
+    "total_users": 982,
+    "gateway_probability": 0.08044806517311609,
+    "global_probability": 0.18663516706041175,
+    "lift": 0.4310445155659005
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "Die My Love (2025)",
+    "count": 52,
+    "total_users": 982,
+    "gateway_probability": 0.05295315682281059,
+    "global_probability": 0.043536955788052646,
+    "lift": 1.216280648573549
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "Frankenstein (2025)",
+    "count": 49,
+    "total_users": 982,
+    "gateway_probability": 0.04989816700610998,
+    "global_probability": 0.11846101923725953,
+    "lift": 0.4212201391427461
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "The Mastermind (2025)",
+    "count": 45,
+    "total_users": 982,
+    "gateway_probability": 0.045824847250509164,
+    "global_probability": 0.07391157610529868,
+    "lift": 0.6199955360879391
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "One Battle After Another (2025)",
+    "count": 41,
+    "total_users": 982,
+    "gateway_probability": 0.04175152749490835,
+    "global_probability": 0.0560242996962538,
+    "lift": 0.7452396142615267
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "It Was Just an Accident (2025)",
+    "count": 40,
+    "total_users": 982,
+    "gateway_probability": 0.04073319755600815,
+    "global_probability": 0.061424232197097535,
+    "lift": 0.6631454085629239
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "Sound of Falling (2025)",
+    "count": 35,
+    "total_users": 982,
+    "gateway_probability": 0.035641547861507125,
+    "global_probability": 0.01181235234559568,
+    "lift": 3.017311608961303
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "The Blue Trail (2025)",
+    "count": 30,
+    "total_users": 982,
+    "gateway_probability": 0.03054989816700611,
+    "global_probability": 0.010124873439082012,
+    "lift": 3.0173116089613035
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "No Other Choice (2025)",
+    "count": 29,
+    "total_users": 982,
+    "gateway_probability": 0.029531568228105907,
+    "global_probability": 0.05231184610192373,
+    "lift": 0.5645292687734051
+  },
+  {
+    "neon_film": "Mirrors No. 3 (2025)",
+    "paired_film": "Dreams (2024)",
+    "count": 24,
+    "total_users": 982,
+    "gateway_probability": 0.024439918533604887,
+    "global_probability": 0.00809989875126561,
+    "lift": 3.017311608961303
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "The Mastermind (2025)",
+    "count": 93,
+    "total_users": 991,
+    "gateway_probability": 0.09384460141271443,
+    "global_probability": 0.07391157610529868,
+    "lift": 1.2696874611227071
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "Sir\u0101t (2025)",
+    "count": 68,
+    "total_users": 991,
+    "gateway_probability": 0.06861755802219979,
+    "global_probability": 0.03813702328720891,
+    "lift": 1.799237384245823
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "Frankenstein (2025)",
+    "count": 66,
+    "total_users": 991,
+    "gateway_probability": 0.06659939455095863,
+    "global_probability": 0.11846101923725953,
+    "lift": 0.5622051454543887
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "Sentimental Value (2025)",
+    "count": 59,
+    "total_users": 991,
+    "gateway_probability": 0.05953582240161453,
+    "global_probability": 0.01991225109686129,
+    "lift": 2.9899091826437942
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "Is This Thing On? (2025)",
+    "count": 54,
+    "total_users": 991,
+    "gateway_probability": 0.054490413723511606,
+    "global_probability": 0.01822477219034762,
+    "lift": 2.9899091826437942
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "Bugonia (2025)",
+    "count": 52,
+    "total_users": 991,
+    "gateway_probability": 0.05247225025227043,
+    "global_probability": 0.18663516706041175,
+    "lift": 0.2811487839014056
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "Father Mother Sister Brother (2025)",
+    "count": 48,
+    "total_users": 991,
+    "gateway_probability": 0.04843592330978809,
+    "global_probability": 0.04994937563280459,
+    "lift": 0.9697002754520413
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "Barry Lyndon (1975)",
+    "count": 41,
+    "total_users": 991,
+    "gateway_probability": 0.04137235116044399,
+    "global_probability": 0.013837327033412082,
+    "lift": 2.989909182643794
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "No Other Choice (2025)",
+    "count": 40,
+    "total_users": 991,
+    "gateway_probability": 0.04036326942482341,
+    "global_probability": 0.05231184610192373,
+    "lift": 0.7715894664887211
+  },
+  {
+    "neon_film": "Rose of Nevada (2025)",
+    "paired_film": "It Was Just an Accident (2025)",
+    "count": 39,
+    "total_users": 991,
+    "gateway_probability": 0.039354187689202826,
+    "global_probability": 0.061424232197097535,
+    "lift": 0.6406948248522416
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "Bugonia (2025)",
+    "count": 76,
+    "total_users": 992,
+    "gateway_probability": 0.07661290322580645,
+    "global_probability": 0.18663516706041175,
+    "lift": 0.4104955375371872
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "It Was Just an Accident (2025)",
+    "count": 42,
+    "total_users": 992,
+    "gateway_probability": 0.04233870967741935,
+    "global_probability": 0.061424232197097535,
+    "lift": 0.6892834987593052
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "One Battle After Another (2025)",
+    "count": 34,
+    "total_users": 992,
+    "gateway_probability": 0.034274193548387094,
+    "global_probability": 0.0560242996962538,
+    "lift": 0.6117737077341624
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "Father Mother Sister Brother (2025)",
+    "count": 34,
+    "total_users": 992,
+    "gateway_probability": 0.034274193548387094,
+    "global_probability": 0.04994937563280459,
+    "lift": 0.6861786181342633
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "Frankenstein (2025)",
+    "count": 34,
+    "total_users": 992,
+    "gateway_probability": 0.034274193548387094,
+    "global_probability": 0.11846101923725953,
+    "lift": 0.2893288760224244
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "The Mastermind (2025)",
+    "count": 31,
+    "total_users": 992,
+    "gateway_probability": 0.03125,
+    "global_probability": 0.07391157610529868,
+    "lift": 0.42280251141552516
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "Resurrection (2025)",
+    "count": 28,
+    "total_users": 992,
+    "gateway_probability": 0.028225806451612902,
+    "global_probability": 0.016874789065136685,
+    "lift": 1.6726612903225806
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "Sir\u0101t (2025)",
+    "count": 27,
+    "total_users": 992,
+    "gateway_probability": 0.02721774193548387,
+    "global_probability": 0.03813702328720891,
+    "lift": 0.7136829146445903
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "The Secret Agent (2025)",
+    "count": 27,
+    "total_users": 992,
+    "gateway_probability": 0.02721774193548387,
+    "global_probability": 0.015187310158623017,
+    "lift": 1.7921370967741936
+  },
+  {
+    "neon_film": "Silent Friend (2025)",
+    "paired_film": "No Other Choice (2025)",
+    "count": 26,
+    "total_users": 992,
+    "gateway_probability": 0.02620967741935484,
+    "global_probability": 0.05231184610192373,
+    "lift": 0.5010275754422476
+  }
+]

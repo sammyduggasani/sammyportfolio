@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>1-2 Special Letterboxd Affinity</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{}}};</script>
+  <style>
+    :root { color-scheme: dark; }
+    body, button, input, textarea, select {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .line-clamp-2{-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .tooltip{position:fixed;z-index:50;pointer-events:none;max-width:360px;background:#18181b;color:#fff;border:1px solid #3f3f46;border-radius:12px;padding:10px 12px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+    .tooltip .k{color:#a3a3a3}
+    .link-underline { text-decoration: underline; text-underline-offset: 4px; }
+    .logo-white { filter: brightness(0) invert(1); }
+  </style>
+</head>
+<body class="min-h-screen bg-neutral-900 text-white">
+  <div id="root" class="max-w-6xl mx-auto px-6 py-10"></div>
+  <div id="tt" class="tooltip hidden"></div>
+
+  <script>
+  // --- helpers ---
+  const $ = sel => document.querySelector(sel);
+  const h = (t, p={}, ...c)=>{
+    const e=document.createElement(t);
+    Object.entries(p).forEach(([k,v])=>{
+      if(k.startsWith('on')) e.addEventListener(k.slice(2).toLowerCase(),v);
+      else if(k==='className') e.className=v;
+      else if(k==='style' && typeof v==='object') Object.assign(e.style,v);
+      else e[k]=v;
+    });
+    c.flat().forEach(x=>e.append(x?.nodeType?x:document.createTextNode(x??'')));
+    return e;
+  };
+  const getQ = k => new URL(location).searchParams.get(k);
+  const setQ = (k,v)=>{const u=new URL(location); v!=null && v!==''?u.searchParams.set(k,v):u.searchParams.delete(k); history.pushState({},'',u)}
+
+  // Slug helper
+  function titleToSlug(title) {
+    return title.toLowerCase()
+      .replace(/['']/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
+
+  // TMDB size helpers
+  function tmdbSize(url, target="w342"){
+    if(!url) return url;
+    return url.replace(/https?:\/\/image\.tmdb\.org\/t\/p\/(w\d+|original)\//, `https://image.tmdb.org/t/p/${target}/`);
+  }
+  function heroSrcSet(url){ 
+    if(!url) return '';
+    const s1=tmdbSize(url,"w500"), s2=tmdbSize(url,"w780"); 
+    return `${s1} 1x, ${s2} 2x`; 
+  }
+
+  // Directors helper
+  function getDirectors(meta){
+    if(!meta) return [];
+    let names = [];
+    if(Array.isArray(meta.directors)){
+      names = meta.directors.map(d => typeof d === 'string' ? d : d?.name).filter(Boolean);
+    }
+    return [...new Set(names)];
+  }
+  
+  function cleanDirectors(arr){
+    if(!Array.isArray(arr) || !arr.length) return '';
+    const shown = arr.slice(0,2);
+    const extra = arr.length - shown.length;
+    return shown.join(', ') + (extra>0 ? ` (+${extra} more)` : '');
+  }
+
+  // Cast helper
+  function getCast(meta, limit=5){
+    if(!meta?.cast) return [];
+    return meta.cast.slice(0,limit).map(c => typeof c === 'string' ? c : c?.name).filter(Boolean);
+  }
+
+  // Lift color
+  function liftColor(lift){
+    if(lift >= 2) return 'bg-emerald-500';
+    if(lift >= 1.5) return 'bg-emerald-600';
+    if(lift >= 1) return 'bg-amber-500';
+    return 'bg-zinc-500';
+  }
+  
+  function liftTextColor(lift){
+    if(lift >= 2) return 'text-emerald-400';
+    if(lift >= 1.5) return 'text-emerald-500';
+    if(lift >= 1) return 'text-amber-400';
+    return 'text-zinc-400';
+  }
+
+  // --- tooltip ---
+  const tt = $('#tt');
+  function showTT(node, x, y){
+    tt.innerHTML = ""; tt.append(node); tt.classList.remove('hidden');
+    const rect = tt.getBoundingClientRect(), pad=12;
+    let nx = Math.min(Math.max(pad, x + 14), window.innerWidth - rect.width - pad);
+    let ny = Math.min(Math.max(pad, y + 14), window.innerHeight - rect.height - pad);
+    tt.style.left = nx + 'px'; tt.style.top = ny + 'px';
+  }
+  function hideTT(){ tt.classList.add('hidden'); }
+
+  function metaBlock(meta, opts={showPoster:false}){
+    if(!meta) return h('div',{}, 'No metadata available');
+    
+    const year = meta.year ? ` (${meta.year})` : '';
+    const genres = meta.genres?.slice(0,4).join(' • ') || '';
+    const rt = meta.runtime ? `${meta.runtime} min` : '';
+    const rate = meta.vote_average ? `${Number(meta.vote_average).toFixed(1)} / 10` : '';
+    const directors = cleanDirectors(getDirectors(meta));
+    const cast = getCast(meta).join(', ');
+    const overview = meta.overview || '';
+
+    const text = h('div',{},
+      h('div',{className:'text-sm font-semibold'}, (meta.title || meta.query_title || '') + year),
+      genres && h('div',{className:'text-xs text-neutral-300 mt-0.5'}, [genres, rt].filter(Boolean).join(' • ')),
+      rate && h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'TMDB: '), rate),
+      directors && h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'Director: '), directors),
+      cast && h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'Cast: '), cast),
+      overview && h('div',{className:'text-xs mt-2 text-neutral-300'}, overview.length>220 ? overview.slice(0,220)+'…' : overview)
+    );
+
+    if(opts.showPoster && opts.posterUrl){
+      const wrap = h('div',{className:'flex gap-3 items-start'});
+      const img = document.createElement('img');
+      img.src = tmdbSize(opts.posterUrl,'w154');
+      img.alt = meta.title || '';
+      img.className = 'rounded-md border border-neutral-700 object-cover w-[70px] h-[105px]';
+      wrap.append(img, h('div',{className:'flex-1 min-w-0'}, text));
+      return wrap;
+    }
+    return text;
+  }
+
+  // --- data loads ---
+  async function loadJSON(path){ 
+    try {
+      const r = await fetch(path, {cache:'no-store'}); 
+      if(!r.ok) return null; 
+      return r.json(); 
+    } catch(e) {
+      console.warn('Failed to load:', path, e);
+      return null;
+    }
+  }
+
+  // --- UI helpers ---
+  function Poster(url, alt, cls='', srcset=''){
+    if(url){
+      const img = document.createElement('img');
+      img.src = url;
+      if(srcset) img.setAttribute('srcset', srcset);
+      img.alt = alt || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.className = `object-cover rounded-lg border border-neutral-700 ${cls}`;
+      return img;
+    }
+    return h('div',{className:`rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center ${cls}`},
+      h('span',{className:'text-neutral-600 text-xs'},'No poster')
+    );
+  }
+
+  function gridItem(card, onClick){
+    const btn = h('button',{className:'text-left group relative',
+      onmouseenter:(e)=>{ if(card.meta) showTT(metaBlock(card.meta), e.clientX, e.clientY); },
+      onmousemove:(e)=>{ if(!tt.classList.contains('hidden')) showTT(metaBlock(card.meta), e.clientX, e.clientY); },
+      onmouseleave: hideTT,
+      onclick: onClick
+    });
+    btn.append(
+      h('div',{className:'relative'},
+        Poster(tmdbSize(card.poster,'w342'), card.title, 'w-full aspect-[2/3]'),
+        h('div',{className:'absolute inset-0 ring-0 group-hover:ring-2 ring-emerald-400/60 rounded-lg transition'})
+      ),
+      h('div',{className:'mt-2'},
+        h('div',{className:'font-medium leading-tight line-clamp-2'}, card.title),
+        h('div',{className:'text-xs text-neutral-400'}, card.year || '—')
+      )
+    );
+    return btn;
+  }
+
+  function pairingRow(pairing, meta, posterUrl){
+    const lift = pairing.lift || 0;
+    const pct = (pairing.gateway_probability * 100).toFixed(1);
+    const globalPct = (pairing.global_probability * 100).toFixed(1);
+    const barWidth = Math.max(4, Math.min(100, lift * 25)); // Scale lift to bar width
+    const slug = meta?.slug || pairing.paired_slug || titleToSlug(pairing.paired_film);
+    const lbUrl = `https://letterboxd.com/film/${slug}/`;
+
+    const row = h('div',{className:'flex items-center gap-4 py-3 cursor-pointer hover:bg-neutral-800/60 rounded-lg px-2 -mx-2 transition',
+      onmouseenter:(e)=>{ if(meta) showTT(metaBlock(meta,{showPoster:true, posterUrl}), e.clientX, e.clientY); },
+      onmousemove:(e)=>{ if(meta && !tt.classList.contains('hidden')) showTT(metaBlock(meta,{showPoster:true, posterUrl}), e.clientX, e.clientY); },
+      onmouseleave: hideTT,
+      onclick:()=>{ window.open(lbUrl, '_blank', 'noopener'); }
+    });
+    
+    row.append(
+      h('div',{className:'w-6 shrink-0 text-sm tabular-nums text-neutral-400'}, pairing.rank || ''),
+      Poster(tmdbSize(posterUrl,'w154'), pairing.paired_film, 'w-12 h-[72px] shrink-0'),
+      h('div',{className:'flex-1 min-w-0'},
+        h('div',{className:'flex items-center justify-between gap-3'},
+          h('div',{className:'font-medium truncate'}, pairing.paired_film),
+          h('div',{className:`text-sm tabular-nums font-medium ${liftTextColor(lift)}`}, `${lift.toFixed(2)}x`)
+        ),
+        h('div',{className:'flex items-center gap-2 mt-1'},
+          h('div',{className:'flex-1 h-2 bg-neutral-700 rounded overflow-hidden'},
+            h('div',{className:`h-full rounded ${liftColor(lift)}`, style:{width:`${barWidth}%`}})
+          ),
+          h('div',{className:'text-xs text-neutral-500 whitespace-nowrap'}, `${pairing.count}/${pairing.total_users}`)
+        ),
+        h('div',{className:'flex gap-4 mt-1 text-xs text-neutral-500'},
+          h('span',{}, `Gateway: ${pct}%`),
+          h('span',{}, `Global: ${globalPct}%`)
+        )
+      )
+    );
+    return row;
+  }
+
+  // --- state ---
+  let AFFINITY = [];
+  let META = {};
+  let POSTERS = {};
+  let NEON_FILMS = [];
+
+  // FIXED: Strict matching - exact slug first, no fuzzy fallbacks that could match wrong films
+  function findMeta(title, slug = null){
+    if (!title) return null;
+    
+    // If a slug is provided, try it first
+    if (slug && META[slug]) return META[slug];
+    
+    // Try exact slug match first
+    const exactSlug = titleToSlug(title);
+    if (META[exactSlug]) return META[exactSlug];
+    
+    // Try to find by exact title match
+    const cleanTitle = title.replace(/\s*\(\d{4}\)\s*$/, '').trim();
+    for (const [key, val] of Object.entries(META)) {
+      if (val.title === title || val.title === cleanTitle || 
+          val.query_title === title || val.query_title === cleanTitle) {
+        return val;
+      }
+    }
+    
+    return null;
+  }
+
+  // FIXED: Accept slug parameter to look up posters correctly
+  function findPoster(title, slug = null){
+    if (!title) return null;
+    
+    // If a slug is provided, try it first (handles cases like dracula-2025-1)
+    if (slug && POSTERS[slug]) return POSTERS[slug];
+    
+    // Try exact slug match 
+    const exactSlug = titleToSlug(title);
+    if (POSTERS[exactSlug]) return POSTERS[exactSlug];
+    
+    // Try to get from metadata
+    const meta = findMeta(title, slug);
+    if (meta?.posters?.w342) return meta.posters.w342;
+    if (meta?.poster_path) return `https://image.tmdb.org/t/p/w342${meta.poster_path}`;
+    
+    return null;
+  }
+
+  function buildNeonList(){
+    // Get unique NEON films from affinity data
+    const neonTitles = [...new Set(AFFINITY.map(a => a.neon_film))];
+    
+    return neonTitles.map(title => {
+      const meta = findMeta(title);
+      const poster = findPoster(title);
+      const slug = meta?.slug || titleToSlug(title);
+      // Extract year from title like "Film Name (2025)"
+      const yearMatch = title.match(/\((\d{4})\)$/);
+      const year = meta?.year || (yearMatch ? parseInt(yearMatch[1]) : null);
+      
+      return {
+        title: meta?.title || title.replace(/\s*\(\d{4}\)$/, ''),
+        fullTitle: title,
+        slug,
+        year,
+        poster,
+        meta
+      };
+    }).sort((a,b) => (b.year || 0) - (a.year || 0));
+  }
+
+  function getFilmPairings(neonTitle){
+    return AFFINITY
+      .filter(a => a.neon_film === neonTitle)
+      .sort((a,b) => b.lift - a.lift)
+      .slice(0, 15)
+      .map((p, i) => ({...p, rank: i + 1}));
+  }
+
+  // --- render ---
+  function render(){
+    const root = $('#root');
+    root.innerHTML = '';
+    const selected = getQ('film');
+
+    // Header: brand
+    const header = h('div', { className: 'flex items-center justify-between' });
+    const brandBtn = h(
+      'button',
+      {
+        className: 'group flex items-center gap-2 md:gap-3',
+        onclick: () => { setQ('film', null); render(); },
+        title: 'Home',
+      },
+      (() => {
+        const img = document.createElement('img');
+        img.src = '/images/12special.svg';
+        img.alt = 'Neon';
+        img.className = 'h-8 md:h-10 opacity-90 group-hover:opacity-100 transition logo-white';
+        return img;
+      })(),
+      h('span', { className: 'text-2xl md:text-3xl font-medium leading-none tracking-tight opacity-90 group-hover:opacity-100 transition' }, 'Letterboxd Affinities')
+    );
+    header.append(brandBtn);
+    root.append(header);
+
+    if(!selected){
+     // === GRID VIEW ===
+
+      // Explanation
+      const aboutOpen = getQ('about') === 'open';
+      root.append(
+        h('div',{className:'mt-6'},
+          h('button',{
+            className:'w-full text-left bg-neutral-800/50 border border-neutral-700 rounded-xl p-4 hover:bg-neutral-800/70 transition flex items-center justify-between',
+            onclick:()=>{ setQ('about', aboutOpen ? null : 'open'); render(); }
+          },
+            h('span',{className:'text-sm font-medium text-emerald-400'}, 'About This Tool'),
+            h('span',{className:'text-neutral-400 text-lg'}, aboutOpen ? '−' : '+')
+          ),
+          
+          // FIXED: prevent "false" from rendering
+          aboutOpen ? h('div',{
+            className:'bg-neutral-800/30 border-x border-b border-neutral-700 rounded-b-xl p-5 space-y-4'
+          },
+            h('p',{className:'text-neutral-300 text-sm leading-relaxed'},
+              'I built this tool to analyze which films 1-2 Special audiences on Letterboxd watch alongside 1-2 Special releases. The lift score shows how much more likely a film is to be watched by 1-2 Special viewers compared to the general Letterboxd population.'
+            ),
+            h('div',{className:'grid md:grid-cols-2 gap-4'},
+              h('div',{},
+                h('div',{className:'text-xs font-semibold text-neutral-400 mb-2'}, 'How to read lift scores:'),
+                h('ul',{className:'text-xs text-neutral-300 space-y-1'},
+                  h('li',{}, h('span',{className:'text-emerald-400 font-mono'}, '2.0x+'), ' = Strong affinity'),
+                  h('li',{}, h('span',{className:'text-emerald-500 font-mono'}, '1.5-2.0x'), ' = Notable affinity'),
+                  h('li',{}, h('span',{className:'text-amber-400 font-mono'}, '1.0-1.5x'), ' = Slight affinity'),
+                  h('li',{}, h('span',{className:'text-zinc-400 font-mono'}, '<1.0x'), ' = Below average')
+                )
+              ),
+              h('div',{},
+                h('div',{className:'text-xs font-semibold text-neutral-400 mb-2'}, 'Use cases:'),
+                h('ul',{className:'text-xs text-neutral-300 space-y-1'},
+                  h('li',{}, '• Target ads to fans of high-lift films'),
+                  h('li',{}, '• Plan double-feature screenings'),
+                  h('li',{}, '• Understand audience taste profiles'),
+                  h('li',{}, '• Find unexpected audience overlaps')
+                )
+              )
+            )
+          ) : null
+        )
+      );
+
+      root.append(h('p',{className:'mt-6 text-neutral-400 text-sm'}, 
+        `${NEON_FILMS.length} 1-2 Special films analyzed. Click to see gateway films.`
+      ));
+
+      // Grid
+      const grid = h('div',{className:'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-6'});
+      NEON_FILMS.forEach(film => {
+        grid.append(gridItem(film, ()=>{ setQ('film', film.fullTitle); render(); }));
+      });
+      root.append(grid);
+    } else {
+      // === DETAIL VIEW ===
+      const film = NEON_FILMS.find(f => f.fullTitle === selected);
+      if(!film){
+        root.append(h('p',{className:'mt-6 text-red-400'}, 'Film not found'));
+        return;
+      }
+
+      root.append(h('button',{className:'mt-4 text-sm text-neutral-300 hover:text-white link-underline',
+        onclick:()=>{ setQ('film',null); render(); }
+      }, '← Back to all films'));
+
+      // Hero
+      const lbUrl = `https://letterboxd.com/film/${film.slug}/`;
+      const hero = h('section',{className:'mt-6 grid grid-cols-1 md:grid-cols-[220px,1fr] gap-6 items-start'});
+      hero.append(
+        Poster(tmdbSize(film.poster,'w500'), film.title, 'w-full md:w-[220px] aspect-[2/3]', heroSrcSet(film.poster)),
+        h('div',{},
+          h('h2',{className:'text-2xl md:text-3xl font-semibold'},
+            h('a',{href:lbUrl, target:'_blank', rel:'noopener', className:'hover:opacity-90 transition'},
+              film.title,
+              film.year && h('span',{className:'text-neutral-400 text-xl'}, ` (${film.year})`)
+            )
+          ),
+          film.meta && (()=>{
+            const m = film.meta;
+            const genres = m.genres?.slice(0,5).join(' • ') || '';
+            const rt = m.runtime ? `${m.runtime} min` : '';
+            const rate = m.vote_average ? `${Number(m.vote_average).toFixed(1)} / 10` : '';
+            const directors = cleanDirectors(getDirectors(m));
+            const cast = getCast(m, 8).join(', ');
+            return h('div',{className:'mt-3 text-sm text-neutral-300 space-y-2'},
+              [genres, rt, rate].filter(Boolean).length && h('div',{}, [genres, rt, rate].filter(Boolean).join(' • ')),
+              directors && h('div',{}, h('span',{className:'text-neutral-400'},'Director: '), directors),
+              cast && h('div',{}, h('span',{className:'text-neutral-400'},'Cast: '), cast),
+              m.overview && h('div',{className:'text-neutral-200 mt-2'}, m.overview)
+            );
+          })()
+        )
+      );
+      root.append(hero);
+
+      // Pairings
+      const pairings = getFilmPairings(selected);
+      
+      // Stats
+      const avgLift = pairings.reduce((a,p) => a + p.lift, 0) / pairings.length;
+      const highLift = pairings.filter(p => p.lift >= 1.5).length;
+      
+      root.append(
+        h('div',{className:'mt-6 flex flex-wrap gap-4'},
+          h('div',{className:'bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3'},
+            h('div',{className:'text-2xl font-bold'}, pairings.length),
+            h('div',{className:'text-xs text-neutral-400'}, 'Gateway Films')
+          ),
+          h('div',{className:'bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3'},
+            h('div',{className:'text-2xl font-bold text-emerald-400'}, avgLift.toFixed(2) + 'x'),
+            h('div',{className:'text-xs text-neutral-400'}, 'Avg Lift')
+          ),
+          h('div',{className:'bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3'},
+            h('div',{className:'text-2xl font-bold text-amber-400'}, highLift),
+            h('div',{className:'text-xs text-neutral-400'}, 'High Affinity (≥1.5x)')
+          )
+        )
+      );
+
+      // Pairings list
+      const box = h('section',{className:'mt-8 bg-neutral-800 border border-neutral-700 rounded-2xl overflow-hidden'});
+      box.append(
+        h('div',{className:'px-5 py-4 border-b border-neutral-700 flex items-center justify-between'},
+          h('h3',{className:'text-xl font-semibold'}, 'Gateway Films'),
+          h('div',{className:'text-xs text-neutral-400'}, 'Sorted by lift score')
+        ),
+        h('div',{className:'p-5 divide-y divide-neutral-700/50'},
+          ...pairings.map(p => {
+            const meta = findMeta(p.paired_film, p.paired_slug);
+            const poster = findPoster(p.paired_film, p.paired_slug);
+            return pairingRow(p, meta, poster);
+          })
+        )
+      );
+      root.append(box);
+
+      // Insights
+      const topPairing = pairings[0];
+      if(topPairing){
+        root.append(
+          h('section',{className:'mt-8 bg-gradient-to-br from-emerald-900/20 to-neutral-900 border border-neutral-700 rounded-2xl p-6'},
+            h('h3',{className:'text-lg font-semibold flex items-center gap-2'},
+              h('span',{},'💡'),
+              'Marketing Insights'
+            ),
+            h('div',{className:'mt-4 grid md:grid-cols-2 gap-4 text-sm'},
+              h('div',{className:'bg-neutral-800/50 rounded-xl p-4'},
+                h('div',{className:'text-emerald-400 font-medium'}, 'Top Gateway Film'),
+                h('p',{className:'text-neutral-300 mt-2'},
+                  `"${topPairing.paired_film}" viewers are ${topPairing.lift.toFixed(1)}x more likely to watch ${film.title}`
+                )
+              ),
+              h('div',{className:'bg-neutral-800/50 rounded-xl p-4'},
+                h('div',{className:'text-amber-400 font-medium'}, 'Audience Overlap'),
+                h('p',{className:'text-neutral-300 mt-2'},
+                  `${(topPairing.gateway_probability * 100).toFixed(0)}% of ${film.title} viewers also watched ${topPairing.paired_film}`
+                )
+              )
+            )
+          )
+        );
+      }
+    }
+
+    // Footer
+    root.append(h('footer',{className:'text-neutral-500 text-xs mt-12 pt-6 border-t border-neutral-800'},
+      'Posters & metadata © TMDB. Viewing data from Letterboxd user histories. Lift = Gateway probability ÷ Global probability.'
+    ));
+  }
+
+  // --- init ---
+  (async function init(){
+    const [affinity, meta, posters] = await Promise.all([
+      loadJSON('data3/gateway_affinity.json'),
+      loadJSON('data3/tmdb_movies.json'),
+      loadJSON('data3/posters.json')
+    ]);
+
+    AFFINITY = affinity || [];
+    META = meta || {};
+    POSTERS = posters || {};
+    NEON_FILMS = buildNeonList();
+
+    if(!AFFINITY.length){
+      $('#root').innerHTML = '<p class="text-red-400 mt-10">Failed to load gateway_affinity.json</p>';
+      return;
+    }
+
+    render();
+    window.addEventListener('popstate', render);
+    window.addEventListener('scroll', hideTT, {passive:true});
+  })();
+  </script>
+</body>
+</html>
