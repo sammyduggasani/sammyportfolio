@@ -15,7 +15,6 @@
     .tooltip{position:fixed;z-index:50;pointer-events:none;max-width:360px;background:#18181b;color:#fff;border:1px solid #3f3f46;border-radius:12px;padding:10px 12px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
     .tooltip .k{color:#a3a3a3}
     .link-underline { text-decoration: underline; text-underline-offset: 4px; }
-    .logo-white { filter: brightness(0) invert(1); }
   </style>
 </head>
 <body class="min-h-screen bg-neutral-900 text-white">
@@ -38,14 +37,6 @@
   };
   const getQ = k => new URL(location).searchParams.get(k);
   const setQ = (k,v)=>{const u=new URL(location); v!=null && v!==''?u.searchParams.set(k,v):u.searchParams.delete(k); history.pushState({},'',u)}
-
-  // Slug helper
-  function titleToSlug(title) {
-    return title.toLowerCase()
-      .replace(/['']/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
-  }
 
   // TMDB size helpers
   function tmdbSize(url, target="w342"){
@@ -119,7 +110,7 @@
     const overview = meta.overview || '';
 
     const text = h('div',{},
-      h('div',{className:'text-sm font-semibold'}, (meta.title || meta.query_title || '') + year),
+      h('div',{className:'text-sm font-semibold'}, (meta.title || '') + year),
       genres && h('div',{className:'text-xs text-neutral-300 mt-0.5'}, [genres, rt].filter(Boolean).join(' • ')),
       rate && h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'TMDB: '), rate),
       directors && h('div',{className:'text-xs mt-1'}, h('span',{className:'k'},'Director: '), directors),
@@ -177,7 +168,7 @@
     });
     btn.append(
       h('div',{className:'relative'},
-        Poster(tmdbSize(card.poster,'w342'), card.title, 'w-full aspect-[2/3]'),
+        Poster(card.poster, card.title, 'w-full aspect-[2/3]'),
         h('div',{className:'absolute inset-0 ring-0 group-hover:ring-2 ring-emerald-400/60 rounded-lg transition'})
       ),
       h('div',{className:'mt-2'},
@@ -192,10 +183,10 @@
     const lift = pairing.lift || 0;
     const pct = (pairing.gateway_probability * 100).toFixed(1);
     const globalPct = (pairing.global_probability * 100).toFixed(1);
-    const barWidth = Math.max(4, Math.min(100, lift * 25)); // Scale lift to bar width
-    // Use paired_film_slug for Letterboxd URL
-    const slug = pairing.paired_film_slug || meta?.slug || titleToSlug(pairing.paired_film);
+    const barWidth = Math.max(4, Math.min(100, lift * 25));
+    const slug = pairing.paired_film_slug;
     const lbUrl = `https://letterboxd.com/film/${slug}/`;
+    const title = meta?.title || pairing.paired_film;
 
     const row = h('div',{className:'flex items-center gap-4 py-3 cursor-pointer hover:bg-neutral-800/60 rounded-lg px-2 -mx-2 transition',
       onmouseenter:(e)=>{ if(meta) showTT(metaBlock(meta,{showPoster:true, posterUrl}), e.clientX, e.clientY); },
@@ -206,10 +197,10 @@
     
     row.append(
       h('div',{className:'w-6 shrink-0 text-sm tabular-nums text-neutral-400'}, pairing.rank || ''),
-      Poster(tmdbSize(posterUrl,'w154'), pairing.paired_film, 'w-12 h-[72px] shrink-0'),
+      Poster(posterUrl, title, 'w-12 h-[72px] shrink-0'),
       h('div',{className:'flex-1 min-w-0'},
         h('div',{className:'flex items-center justify-between gap-3'},
-          h('div',{className:'font-medium truncate'}, pairing.paired_film),
+          h('div',{className:'font-medium truncate'}, title),
           h('div',{className:`text-sm tabular-nums font-medium ${liftTextColor(lift)}`}, `${lift.toFixed(2)}x`)
         ),
         h('div',{className:'flex items-center gap-2 mt-1'},
@@ -233,72 +224,39 @@
   let POSTERS = {};
   let NEON_FILMS = [];
 
-  // Look up metadata by title
-  function findMeta(title){
-    if (!title) return null;
-    
-    // Try exact slug match first
-    const exactSlug = titleToSlug(title);
-    if (META[exactSlug]) return META[exactSlug];
-    
-    // Try to find by exact title match
-    const cleanTitle = title.replace(/\s*\(\d{4}\)\s*$/, '').trim();
-    for (const [key, val] of Object.entries(META)) {
-      if (val.title === title || val.title === cleanTitle || 
-          val.query_title === title || val.query_title === cleanTitle) {
-        return val;
-      }
-    }
-    
-    return null;
+  // Simple lookups by slug
+  function getMeta(slug) {
+    return META[slug] || null;
   }
 
-  // Look up poster by SLUG (primary method for correct lookups like dracula-2025-1)
-  function findPoster(slug){
-    if (!slug) return null;
-    
-    // Direct slug lookup in POSTERS
-    if (POSTERS[slug]) return POSTERS[slug];
-    
-    // Try to get from metadata by slug
-    if (META[slug]?.posters?.w342) return META[slug].posters.w342;
-    if (META[slug]?.poster_path) return `https://image.tmdb.org/t/p/w342${META[slug].poster_path}`;
-    
-    return null;
+  function getPoster(slug) {
+    return POSTERS[slug] || null;
+  }
+
+  function getTitle(slug) {
+    return META[slug]?.title || slug;
+  }
+
+  function getYear(slug) {
+    return META[slug]?.year || null;
   }
 
   function buildNeonList(){
-    // Get unique NEON films from affinity data
-    // Group by neon_film to get the slug association
-    const neonFilmMap = new Map();
-    AFFINITY.forEach(a => {
-      if (!neonFilmMap.has(a.neon_film)) {
-        neonFilmMap.set(a.neon_film, a.neon_film_slug);
-      }
-    });
+    // Get unique neon film slugs
+    const neonSlugs = [...new Set(AFFINITY.map(a => a.neon_film_slug))];
     
-    return Array.from(neonFilmMap.entries()).map(([title, slug]) => {
-      const meta = findMeta(title);
-      const poster = findPoster(slug);  // Use slug for poster lookup
-      const actualSlug = slug || meta?.slug || titleToSlug(title);
-      // Extract year from title like "Film Name (2025)"
-      const yearMatch = title.match(/\((\d{4})\)$/);
-      const year = meta?.year || (yearMatch ? parseInt(yearMatch[1]) : null);
-      
-      return {
-        title: meta?.title || title.replace(/\s*\(\d{4}\)$/, ''),
-        fullTitle: title,
-        slug: actualSlug,
-        year,
-        poster,
-        meta
-      };
-    }).sort((a,b) => (b.year || 0) - (a.year || 0));
+    return neonSlugs.map(slug => ({
+      slug,
+      title: getTitle(slug),
+      year: getYear(slug),
+      poster: getPoster(slug),
+      meta: getMeta(slug)
+    })).sort((a,b) => (b.year || 0) - (a.year || 0));
   }
 
-  function getFilmPairings(neonTitle){
+  function getFilmPairings(neonSlug){
     return AFFINITY
-      .filter(a => a.neon_film === neonTitle)
+      .filter(a => a.neon_film_slug === neonSlug)
       .sort((a,b) => b.lift - a.lift)
       .slice(0, 15)
       .map((p, i) => ({...p, rank: i + 1}));
@@ -308,9 +266,9 @@
   function render(){
     const root = $('#root');
     root.innerHTML = '';
-    const selected = getQ('film');
+    const selected = getQ('film'); // This is now a slug
 
-    // Header: brand
+    // Header
     const header = h('div', { className: 'flex items-center justify-between' });
     const brandBtn = h(
       'button',
@@ -322,8 +280,8 @@
       (() => {
         const img = document.createElement('img');
         img.src = '/images/12special.svg';
-        img.alt = '12special';
-        img.className = 'h-8 md:h-10 opacity-90 group-hover:opacity-100 transition logo-white';
+        img.alt = '1-2 Special';
+        img.className = 'h-8 md:h-10';
         return img;
       })(),
       h('span', { className: 'text-2xl md:text-3xl font-medium leading-none tracking-tight opacity-90 group-hover:opacity-100 transition' }, 'Letterboxd Affinities')
@@ -332,9 +290,7 @@
     root.append(header);
 
     if(!selected){
-     // === GRID VIEW ===
-
-      // Explanation
+      // === GRID VIEW ===
       const aboutOpen = getQ('about') === 'open';
       root.append(
         h('div',{className:'mt-6'},
@@ -350,7 +306,7 @@
             className:'bg-neutral-800/30 border-x border-b border-neutral-700 rounded-b-xl p-5 space-y-4'
           },
             h('p',{className:'text-neutral-300 text-sm leading-relaxed'},
-              'I built this tool to analyze which films 1-2 Special audiences on Letterboxd watch alongside 1-2 Special releases. The lift score shows how much more likely a film is to be watched by 1-2 Special viewers compared to the general Letterboxd population.'
+              'This tool analyzes which films 1-2 Special audiences on Letterboxd watch alongside 1-2 Special releases. The lift score shows how much more likely a film is to be watched by 1-2 Special viewers compared to the general Letterboxd population.'
             ),
             h('div',{className:'grid md:grid-cols-2 gap-4'},
               h('div',{},
@@ -377,18 +333,18 @@
       );
 
       root.append(h('p',{className:'mt-6 text-neutral-400 text-sm'}, 
-        `${NEON_FILMS.length} 1-2 Special films analyzed. Click to see gateway films.`
+        `${NEON_FILMS.length} films analyzed. Click to see gateway films.`
       ));
 
-      // Grid
       const grid = h('div',{className:'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-6'});
       NEON_FILMS.forEach(film => {
-        grid.append(gridItem(film, ()=>{ setQ('film', film.fullTitle); render(); }));
+        grid.append(gridItem(film, ()=>{ setQ('film', film.slug); render(); }));
       });
       root.append(grid);
+
     } else {
       // === DETAIL VIEW ===
-      const film = NEON_FILMS.find(f => f.fullTitle === selected);
+      const film = NEON_FILMS.find(f => f.slug === selected);
       if(!film){
         root.append(h('p',{className:'mt-6 text-red-400'}, 'Film not found'));
         return;
@@ -431,8 +387,7 @@
       // Pairings
       const pairings = getFilmPairings(selected);
       
-      // Stats
-      const avgLift = pairings.reduce((a,p) => a + p.lift, 0) / pairings.length;
+      const avgLift = pairings.length ? pairings.reduce((a,p) => a + p.lift, 0) / pairings.length : 0;
       const highLift = pairings.filter(p => p.lift >= 1.5).length;
       
       root.append(
@@ -452,7 +407,6 @@
         )
       );
 
-      // Pairings list
       const box = h('section',{className:'mt-8 bg-neutral-800 border border-neutral-700 rounded-2xl overflow-hidden'});
       box.append(
         h('div',{className:'px-5 py-4 border-b border-neutral-700 flex items-center justify-between'},
@@ -461,9 +415,9 @@
         ),
         h('div',{className:'p-5 divide-y divide-neutral-700/50'},
           ...pairings.map(p => {
-            const meta = findMeta(p.paired_film);
-            // Use paired_film_slug for poster lookup
-            const poster = findPoster(p.paired_film_slug);
+            const slug = p.paired_film_slug;
+            const meta = getMeta(slug);
+            const poster = getPoster(slug);
             return pairingRow(p, meta, poster);
           })
         )
@@ -473,6 +427,7 @@
       // Insights
       const topPairing = pairings[0];
       if(topPairing){
+        const topTitle = getTitle(topPairing.paired_film_slug);
         root.append(
           h('section',{className:'mt-8 bg-gradient-to-br from-emerald-900/20 to-neutral-900 border border-neutral-700 rounded-2xl p-6'},
             h('h3',{className:'text-lg font-semibold flex items-center gap-2'},
@@ -483,13 +438,13 @@
               h('div',{className:'bg-neutral-800/50 rounded-xl p-4'},
                 h('div',{className:'text-emerald-400 font-medium'}, 'Top Gateway Film'),
                 h('p',{className:'text-neutral-300 mt-2'},
-                  `"${topPairing.paired_film}" viewers are ${topPairing.lift.toFixed(1)}x more likely to watch ${film.title}`
+                  `"${topTitle}" viewers are ${topPairing.lift.toFixed(1)}x more likely to watch ${film.title}`
                 )
               ),
               h('div',{className:'bg-neutral-800/50 rounded-xl p-4'},
                 h('div',{className:'text-amber-400 font-medium'}, 'Audience Overlap'),
                 h('p',{className:'text-neutral-300 mt-2'},
-                  `${(topPairing.gateway_probability * 100).toFixed(0)}% of ${film.title} viewers also watched ${topPairing.paired_film}`
+                  `${(topPairing.gateway_probability * 100).toFixed(0)}% of ${film.title} viewers also watched ${topTitle}`
                 )
               )
             )

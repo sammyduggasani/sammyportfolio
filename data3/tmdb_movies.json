@@ -1,4 +1,118 @@
 {
+  "a-poet": {
+    "slug": "a-poet",
+    "query_title": "A Poet",
+    "tmdb_found": true,
+    "tmdb_id": 1465563,
+    "imdb_id": "tt36544524",
+    "title": "A Poet",
+    "original_title": "Un Poeta",
+    "year": 2025,
+    "release_date": "2025-08-28",
+    "runtime": 120,
+    "overview": "Middle-aged and erratic, Oscar is a failed writer who has given up on life. Unemployed and living with family, he wanders the streets of Medellín in a drunken stupor, lamenting the state of literature in his home country, where he has succumbed to the cliché of the tortured artist. However, the opportunity to mentor a young student offers a chance at redemption, if he doesn’t screw it up first.",
+    "tagline": "",
+    "vote_average": 7.7,
+    "vote_count": 9,
+    "popularity": 4.6996,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "genre_ids": [
+      35,
+      18
+    ],
+    "production_companies": [
+      "Ocúltimo",
+      "Medio de Contención Producciones",
+      "ma.ja.de. Fiction",
+      "Momento Film",
+      "ZDF/Arte",
+      "Film i Väst",
+      "Das kleine Fernsehspiel"
+    ],
+    "production_countries": [
+      "Colombia",
+      "Germany",
+      "Sweden"
+    ],
+    "spoken_languages": [
+      "Spanish"
+    ],
+    "original_language": "es",
+    "status": "Released",
+    "budget": 0,
+    "revenue": 0,
+    "directors": [
+      {
+        "id": 1488620,
+        "name": "Simón Mesa Soto",
+        "profile_path": "/mqLY9PStXBXiIO8mDuYxsxi2l0P.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 5403580,
+        "name": "Ubeimar Rios",
+        "character": "Oscar",
+        "profile_path": "/clu8v8OAaTlvS3wvBiucEeF175u.jpg",
+        "order": 0
+      },
+      {
+        "id": 5403584,
+        "name": "Rebeca Andrade",
+        "character": "Yurlady",
+        "profile_path": "/rEDJ4Bi0XC8HDGH9Z39U4CvSUkF.jpg",
+        "order": 1
+      },
+      {
+        "id": 5753068,
+        "name": "Guillermo Cardona",
+        "character": "Efraín",
+        "profile_path": "/aOYkzrzpI6TVYvHLSiRh0s53IFO.jpg",
+        "order": 2
+      },
+      {
+        "id": 5403581,
+        "name": "Alisson Correa",
+        "character": "Daniela",
+        "profile_path": "/ulZjmNFGs84Ms7yAMDHiEdWFXnW.jpg",
+        "order": 3
+      },
+      {
+        "id": 5403582,
+        "name": "Margarita Soto",
+        "character": "Teresita",
+        "profile_path": null,
+        "order": 4
+      },
+      {
+        "id": 5403583,
+        "name": "Humberto Restrepo",
+        "character": "Alonso",
+        "profile_path": null,
+        "order": 5
+      }
+    ],
+    "poster_path": "/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg",
+    "backdrop_path": "/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg",
+    "posters": {
+      "w92": "https://image.tmdb.org/t/p/w92/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg",
+      "w154": "https://image.tmdb.org/t/p/w154/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg",
+      "w185": "https://image.tmdb.org/t/p/w185/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg",
+      "w342": "https://image.tmdb.org/t/p/w342/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg",
+      "w500": "https://image.tmdb.org/t/p/w500/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg",
+      "original": "https://image.tmdb.org/t/p/original/lfKPWpLIzApjyUJ22igW7iFmRpT.jpg"
+    },
+    "backdrops": {
+      "w300": "https://image.tmdb.org/t/p/w300/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg",
+      "w1280": "https://image.tmdb.org/t/p/w1280/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg",
+      "original": "https://image.tmdb.org/t/p/original/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg"
+    }
+  },
   "a-poet-2025": {
     "slug": "a-poet-2025",
     "query_title": "A Poet",
@@ -111,6 +225,149 @@
       "w780": "https://image.tmdb.org/t/p/w780/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg",
       "w1280": "https://image.tmdb.org/t/p/w1280/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg",
       "original": "https://image.tmdb.org/t/p/original/f7hQAYL6HQ6P2H37di3ZxdrzCe3.jpg"
+    }
+  },
+  "a-useful-ghost": {
+    "slug": "a-useful-ghost",
+    "query_title": "A Useful Ghost",
+    "tmdb_found": true,
+    "tmdb_id": 1364904,
+    "imdb_id": "tt22530226",
+    "title": "A Useful Ghost",
+    "original_title": "ผีใช้ได้ค่ะ",
+    "year": 2025,
+    "release_date": "2025-08-27",
+    "runtime": 130,
+    "overview": "After dying from a respiratory disease, a mother's spirit possesses a vacuum cleaner to protect her husband when he begins showing the same symptoms.",
+    "tagline": "Love sucks.",
+    "vote_average": 6.4,
+    "vote_count": 10,
+    "popularity": 2.5172,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ],
+    "genre_ids": [
+      35,
+      18,
+      14
+    ],
+    "production_companies": [
+      "185 Films",
+      "Haut les Mains",
+      "Momo Film Co",
+      "Mayana Films"
+    ],
+    "production_countries": [
+      "Thailand",
+      "France",
+      "Singapore",
+      "Germany"
+    ],
+    "spoken_languages": [
+      "English",
+      "Thai"
+    ],
+    "original_language": "th",
+    "status": "Released",
+    "budget": 0,
+    "revenue": 0,
+    "directors": [
+      {
+        "id": 1655373,
+        "name": "Ratchapoom Boonbunchachoke",
+        "profile_path": "/ldfSotQzrKpxK5WW9Is6aG2Vw3U.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1167603,
+        "name": "Davika Hoorne",
+        "character": "Nat",
+        "profile_path": "/dAPMDffwxEgGT2DQnVH493JaB8T.jpg",
+        "order": 0
+      },
+      {
+        "id": 3162383,
+        "name": "Witsarut Himmarat",
+        "character": "March",
+        "profile_path": "/abFhOfdyFpE4KPiLLRLCdnUK4YU.jpg",
+        "order": 1
+      },
+      {
+        "id": 2398475,
+        "name": "Apasiri Nitibhon",
+        "character": "Suman",
+        "profile_path": "/yGuaZcWRowFq5E7ws0vCReikoR8.jpg",
+        "order": 2
+      },
+      {
+        "id": 1108172,
+        "name": "Wanlop Rungkumjad",
+        "character": "Krong",
+        "profile_path": "/4Pl8W5LNerx3rvdTqsfiB6OsbV5.jpg",
+        "order": 3
+      },
+      {
+        "id": 5372106,
+        "name": "Wisarut Homhuan",
+        "character": "Academic Ladyboy",
+        "profile_path": "/kpiCAKmv2iqDiO2qAgB7DbDwiOu.jpg",
+        "order": 4
+      },
+      {
+        "id": 2735144,
+        "name": "Gandhi​ Wasuvitchayagit",
+        "character": "Dr. Paul",
+        "profile_path": "/nX62BVjjHy1X3VvBcpfDpLpGcWp.jpg",
+        "order": 5
+      },
+      {
+        "id": 2735136,
+        "name": "Ornanong Thaisriwong",
+        "character": "Dr. Paul's Wife",
+        "profile_path": "/sjc8vVK2ZhHKz9IeYPR8w0X9vaW.jpg",
+        "order": 6
+      },
+      {
+        "id": 5453244,
+        "name": "Kritpahat Srimangkornkaew",
+        "character": "Daan",
+        "profile_path": null,
+        "order": 7
+      },
+      {
+        "id": 5425119,
+        "name": "Katanyu Swangsri",
+        "character": "Mos",
+        "profile_path": null,
+        "order": 8
+      },
+      {
+        "id": 5453248,
+        "name": "Dhyan Ho",
+        "character": "Ted",
+        "profile_path": null,
+        "order": 9
+      }
+    ],
+    "poster_path": "/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg",
+    "backdrop_path": "/nZxI8LN5Xm4fX947KfjfN4Fa69g.jpg",
+    "posters": {
+      "w92": "https://image.tmdb.org/t/p/w92/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg",
+      "w154": "https://image.tmdb.org/t/p/w154/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg",
+      "w185": "https://image.tmdb.org/t/p/w185/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg",
+      "w342": "https://image.tmdb.org/t/p/w342/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg",
+      "w500": "https://image.tmdb.org/t/p/w500/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg",
+      "original": "https://image.tmdb.org/t/p/original/mMv0WJPlZ0jc9wIhbiwhu0SobxK.jpg"
+    },
+    "backdrops": {
+      "w300": "https://image.tmdb.org/t/p/w300/nZxI8LN5Xm4fX947KfjfN4Fa69g.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/nZxI8LN5Xm4fX947KfjfN4Fa69g.jpg",
+      "w1280": "https://image.tmdb.org/t/p/w1280/nZxI8LN5Xm4fX947KfjfN4Fa69g.jpg",
+      "original": "https://image.tmdb.org/t/p/original/nZxI8LN5Xm4fX947KfjfN4Fa69g.jpg"
     }
   },
   "after-the-hunt-2025": {
@@ -394,6 +651,140 @@
       "w780": "https://image.tmdb.org/t/p/w780/2rtOJVlzl3svBo9jqY9BmzU9OL5.jpg",
       "w1280": "https://image.tmdb.org/t/p/w1280/2rtOJVlzl3svBo9jqY9BmzU9OL5.jpg",
       "original": "https://image.tmdb.org/t/p/original/2rtOJVlzl3svBo9jqY9BmzU9OL5.jpg"
+    }
+  },
+  "amrum": {
+    "slug": "amrum",
+    "query_title": "Amrum",
+    "tmdb_found": true,
+    "tmdb_id": 1269644,
+    "imdb_id": "tt22507216",
+    "title": "Amrum",
+    "original_title": "Amrum",
+    "year": 2025,
+    "release_date": "2025-10-09",
+    "runtime": 93,
+    "overview": "Amrum Island, Spring 1945. In the final days of the war, 12-year-old Nanning braves the treacherous sea to hunt seals, goes fishing at night, and works the nearby farm to help his mother feed the family. Despite the hardship, life on the beautiful, windswept island almost feels like paradise. But when peace finally comes, it reveals a deeper threat: the enemy is far closer than he imagined.",
+    "tagline": "",
+    "vote_average": 7.571,
+    "vote_count": 14,
+    "popularity": 2.5863,
+    "genres": [
+      "Drama"
+    ],
+    "genre_ids": [
+      18
+    ],
+    "production_companies": [
+      "Bombero International",
+      "Rialto Film",
+      "Warner Bros. Film Productions Germany"
+    ],
+    "production_countries": [
+      "Germany"
+    ],
+    "spoken_languages": [
+      "German"
+    ],
+    "original_language": "de",
+    "status": "Released",
+    "budget": 0,
+    "revenue": 0,
+    "directors": [
+      {
+        "id": 5125,
+        "name": "Fatih Akin",
+        "profile_path": "/jqxUPrXlsAoNPY2GiZaZXUjFbTH.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 4670403,
+        "name": "Jasper Billerbeck",
+        "character": "Nanning",
+        "profile_path": null,
+        "order": 0
+      },
+      {
+        "id": 9824,
+        "name": "Diane Kruger",
+        "character": "Tessa Bendixen",
+        "profile_path": "/o5gVowcjVw4ThYi0L3883Y4X7kH.jpg",
+        "order": 1
+      },
+      {
+        "id": 4670402,
+        "name": "Kian Köppke",
+        "character": "Hermann",
+        "profile_path": null,
+        "order": 2
+      },
+      {
+        "id": 11611,
+        "name": "Laura Tonke",
+        "character": "Hille Hagener",
+        "profile_path": "/3tunqYBaoMEpeWQUu25qjGgse3v.jpg",
+        "order": 3
+      },
+      {
+        "id": 1865,
+        "name": "Hark Bohm",
+        "character": "Old Man",
+        "profile_path": "/Avq5ZdFpPiFypULhFKeDKUofI1q.jpg",
+        "order": 4
+      },
+      {
+        "id": 16808,
+        "name": "Matthias Schweighöfer",
+        "character": "Theo",
+        "profile_path": "/i4c5JjvC5EpecZbp4J96mFmtm0Z.jpg",
+        "order": 5
+      },
+      {
+        "id": 560216,
+        "name": "Lisa Hagmeister",
+        "character": "Ena",
+        "profile_path": "/826Y7niTC1W1C8Oiz2UIEU1gYzT.jpg",
+        "order": 6
+      },
+      {
+        "id": 5844,
+        "name": "Detlev Buck",
+        "character": "Sam Gangsters",
+        "profile_path": "/wYHmjGNkW4Am9JOtaEIqI7RFRpD.jpg",
+        "order": 7
+      },
+      {
+        "id": 57763,
+        "name": "Lars Jessen",
+        "character": "Arjan",
+        "profile_path": "/kMDaMoIlOZb52hYaSis7lBHYImY.jpg",
+        "order": 8
+      },
+      {
+        "id": 5407506,
+        "name": "Florentine Panizza",
+        "character": "",
+        "profile_path": null,
+        "order": 9
+      }
+    ],
+    "poster_path": "/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg",
+    "backdrop_path": "/oiiQVnnEY4M2pz6iZkq59ls9fP.jpg",
+    "posters": {
+      "w92": "https://image.tmdb.org/t/p/w92/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg",
+      "w154": "https://image.tmdb.org/t/p/w154/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg",
+      "w185": "https://image.tmdb.org/t/p/w185/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg",
+      "w342": "https://image.tmdb.org/t/p/w342/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg",
+      "w500": "https://image.tmdb.org/t/p/w500/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg",
+      "original": "https://image.tmdb.org/t/p/original/yrFHlsSa5bK2LrV0oN6xpdodyBI.jpg"
+    },
+    "backdrops": {
+      "w300": "https://image.tmdb.org/t/p/w300/oiiQVnnEY4M2pz6iZkq59ls9fP.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/oiiQVnnEY4M2pz6iZkq59ls9fP.jpg",
+      "w1280": "https://image.tmdb.org/t/p/w1280/oiiQVnnEY4M2pz6iZkq59ls9fP.jpg",
+      "original": "https://image.tmdb.org/t/p/original/oiiQVnnEY4M2pz6iZkq59ls9fP.jpg"
     }
   },
   "barry-lyndon": {
@@ -3115,6 +3506,148 @@
       "original": "https://image.tmdb.org/t/p/original/wYRdaA5XIXJqFDHoTXfvW19mJnU.jpg"
     }
   },
+  "my-fathers-shadow-2025": {
+    "slug": "my-fathers-shadow-2025",
+    "query_title": "My Father's Shadow",
+    "tmdb_found": true,
+    "tmdb_id": 1432605,
+    "imdb_id": "tt35695538",
+    "title": "My Father's Shadow",
+    "original_title": "My Father's Shadow",
+    "year": 2025,
+    "release_date": "2025-09-19",
+    "runtime": 93,
+    "overview": "Kid brothers Remi and Akin get to spend a gift of a day with their estranged father Folarin. They go on a voyage into Lagos observing the colossal city for the first time and the hoops their father must deal with to provide. All this happens in the backdrop of a huge 1993 presidential election result which calls into question his ability to get them home.",
+    "tagline": "",
+    "vote_average": 8.0,
+    "vote_count": 5,
+    "popularity": 4.2554,
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "genre_ids": [
+      18,
+      36
+    ],
+    "production_companies": [
+      "BBC Film",
+      "BFI",
+      "Fremantle",
+      "Electric Theatre Collective",
+      "Element Pictures",
+      "Crybaby",
+      "Fatherland Productions"
+    ],
+    "production_countries": [
+      "Nigeria",
+      "United Kingdom",
+      "Ireland"
+    ],
+    "spoken_languages": [
+      "English"
+    ],
+    "original_language": "en",
+    "status": "Released",
+    "budget": 0,
+    "revenue": 0,
+    "directors": [
+      {
+        "id": 2807817,
+        "name": "Akinola Davies Jr.",
+        "profile_path": "/jDef5RADc8j2j0kmpG3GAjflytD.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1479869,
+        "name": "Ṣọpẹ́ Dìrísù",
+        "character": "Folarin",
+        "profile_path": "/24Se9voPxrO200Ae8GQRbMkE55B.jpg",
+        "order": 0
+      },
+      {
+        "id": 5362774,
+        "name": "Efon Wini",
+        "character": "Bola",
+        "profile_path": "/4qY9G7oqXuVofTaJQ6Fp7q1G2Yf.jpg",
+        "order": 1
+      },
+      {
+        "id": 5404281,
+        "name": "Godwin Egbo",
+        "character": "Akinola",
+        "profile_path": null,
+        "order": 2
+      },
+      {
+        "id": 5404282,
+        "name": "Chibuike Marvellous Egbo",
+        "character": "Olaremi",
+        "profile_path": null,
+        "order": 3
+      },
+      {
+        "id": 4871257,
+        "name": "Tosin Adeyemi",
+        "character": "Aunty Seyi",
+        "profile_path": "/kLTd0q0TXIETcPR8g6WUmBHgaAE.jpg",
+        "order": 4
+      },
+      {
+        "id": 5679703,
+        "name": "Adesina McCoy Babalola",
+        "character": "Gbemi",
+        "profile_path": null,
+        "order": 5
+      },
+      {
+        "id": 5679705,
+        "name": "Lawrence Chu",
+        "character": "Segun",
+        "profile_path": null,
+        "order": 6
+      },
+      {
+        "id": 2481723,
+        "name": "Patrick Diabuah",
+        "character": "Felix",
+        "profile_path": "/bNlKi7pbQqFXlyXUtE1FBYZllo8.jpg",
+        "order": 7
+      },
+      {
+        "id": 5679706,
+        "name": "Paul Edobor",
+        "character": "Patron",
+        "profile_path": null,
+        "order": 8
+      },
+      {
+        "id": 3879430,
+        "name": "Martha Ehinome Orhiere",
+        "character": "Ngozi",
+        "profile_path": "/Bnx0BkrxatSQUc9aVdY3F2QnVF.jpg",
+        "order": 9
+      }
+    ],
+    "poster_path": "/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg",
+    "backdrop_path": "/4eo6xojA8OPoGlN72PfNwHf8f7i.jpg",
+    "posters": {
+      "w92": "https://image.tmdb.org/t/p/w92/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg",
+      "w154": "https://image.tmdb.org/t/p/w154/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg",
+      "w185": "https://image.tmdb.org/t/p/w185/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg",
+      "w342": "https://image.tmdb.org/t/p/w342/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg",
+      "w500": "https://image.tmdb.org/t/p/w500/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg",
+      "original": "https://image.tmdb.org/t/p/original/jxF7yii3FQjekEn7rw3DWzKqPZI.jpg"
+    },
+    "backdrops": {
+      "w300": "https://image.tmdb.org/t/p/w300/4eo6xojA8OPoGlN72PfNwHf8f7i.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/4eo6xojA8OPoGlN72PfNwHf8f7i.jpg",
+      "w1280": "https://image.tmdb.org/t/p/w1280/4eo6xojA8OPoGlN72PfNwHf8f7i.jpg",
+      "original": "https://image.tmdb.org/t/p/original/4eo6xojA8OPoGlN72PfNwHf8f7i.jpg"
+    }
+  },
   "no-other-choice-2025": {
     "slug": "no-other-choice-2025",
     "query_title": "No Other Choice",
@@ -4958,6 +5491,143 @@
       "w780": "https://image.tmdb.org/t/p/w780/c2ATu4NcVZEKHYLHugkqdrsMswt.jpg",
       "w1280": "https://image.tmdb.org/t/p/w1280/c2ATu4NcVZEKHYLHugkqdrsMswt.jpg",
       "original": "https://image.tmdb.org/t/p/original/c2ATu4NcVZEKHYLHugkqdrsMswt.jpg"
+    }
+  },
+  "the-great-arch-2025": {
+    "slug": "the-great-arch-2025",
+    "query_title": "The Great Arch",
+    "tmdb_found": true,
+    "tmdb_id": 1290424,
+    "imdb_id": "tt32398150",
+    "title": "The Great Arch",
+    "original_title": "L'Inconnu de la Grande Arche",
+    "year": 2025,
+    "release_date": "2025-11-05",
+    "runtime": 104,
+    "overview": "1983. The biggest architectural competition in history, both anonymous and open, is launched under the impetus of a new socialist president, François Mitterrand. Coveted by all the biggest international architectural firms, the competition is surprisingly won by an unknown: Johan Otto von Spreckelsen, an architecture teacher from Copenhagen. Until then, the fifty-year-old Danish had only built 4 buildings: his home and three small chapels.",
+    "tagline": "",
+    "vote_average": 7.363,
+    "vote_count": 40,
+    "popularity": 5.0094,
+    "genres": [
+      "Drama"
+    ],
+    "genre_ids": [
+      18
+    ],
+    "production_companies": [
+      "Agat Films & Cie / Ex Nihilo",
+      "France 3 Cinéma",
+      "Le Pacte",
+      "Zentropa Entertainments"
+    ],
+    "production_countries": [
+      "France",
+      "Denmark"
+    ],
+    "spoken_languages": [
+      "Danish",
+      "French"
+    ],
+    "original_language": "fr",
+    "status": "Released",
+    "budget": 0,
+    "revenue": 0,
+    "directors": [
+      {
+        "id": 1186795,
+        "name": "Stéphane Demoustier",
+        "profile_path": "/oZy4I1RoX6LQ2XjP59z4szOztOk.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 150802,
+        "name": "Claes Bang",
+        "character": "Johan Otto von Spreckelsen",
+        "profile_path": "/fqSBUq2UEoQYuqjjKNMQzDVxZv2.jpg",
+        "order": 0
+      },
+      {
+        "id": 32683,
+        "name": "Sidse Babett Knudsen",
+        "character": "Liv von Spreckelsen",
+        "profile_path": "/yVkWyBuJaup9I6FIgjZlGkczNNj.jpg",
+        "order": 1
+      },
+      {
+        "id": 143593,
+        "name": "Xavier Dolan",
+        "character": "Jean-Louis Subilon",
+        "profile_path": "/sKvDmg9HQ6zauWo5XpsBVR8xBf4.jpg",
+        "order": 2
+      },
+      {
+        "id": 145120,
+        "name": "Swann Arlaud",
+        "character": "Paul Andreu",
+        "profile_path": "/4f0uzg6eIekIhCuihvqYeVlxf6B.jpg",
+        "order": 3
+      },
+      {
+        "id": 4395,
+        "name": "Michel Fau",
+        "character": "François Mitterrand",
+        "profile_path": "/feskKEOsyrqZrnQr2LpmQvdXV2f.jpg",
+        "order": 4
+      },
+      {
+        "id": 1618051,
+        "name": "Jean des Forêts",
+        "character": "Alain Juppé",
+        "profile_path": "/wPJVyr0dI15HYwBaoHDEuxIBgK5.jpg",
+        "order": 5
+      },
+      {
+        "id": 81144,
+        "name": "Micha Lescot",
+        "character": "Leloup",
+        "profile_path": "/sKEi3DKXvgKVUObbAEQpYqo5L1l.jpg",
+        "order": 6
+      },
+      {
+        "id": 48377,
+        "name": "Alessandro Bressanello",
+        "character": "Marble man",
+        "profile_path": "/htcsjd0FVBorC69sRFbcoxgNbGa.jpg",
+        "order": 7
+      },
+      {
+        "id": 5813197,
+        "name": "Ilaria Cabras",
+        "character": "Marble man's daughter",
+        "profile_path": null,
+        "order": 8
+      },
+      {
+        "id": 1327785,
+        "name": "Viilbjørk Malling Agger",
+        "character": "Architect student",
+        "profile_path": "/rapnQvF5rzNyFtuShqQp86oPNc2.jpg",
+        "order": 9
+      }
+    ],
+    "poster_path": "/zriwECvMyJNcUdXrELeYSrXF0f2.jpg",
+    "backdrop_path": "/mNqnqNtZlLRFm1VLc3YmLuuCwyI.jpg",
+    "posters": {
+      "w92": "https://image.tmdb.org/t/p/w92/zriwECvMyJNcUdXrELeYSrXF0f2.jpg",
+      "w154": "https://image.tmdb.org/t/p/w154/zriwECvMyJNcUdXrELeYSrXF0f2.jpg",
+      "w185": "https://image.tmdb.org/t/p/w185/zriwECvMyJNcUdXrELeYSrXF0f2.jpg",
+      "w342": "https://image.tmdb.org/t/p/w342/zriwECvMyJNcUdXrELeYSrXF0f2.jpg",
+      "w500": "https://image.tmdb.org/t/p/w500/zriwECvMyJNcUdXrELeYSrXF0f2.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/zriwECvMyJNcUdXrELeYSrXF0f2.jpg",
+      "original": "https://image.tmdb.org/t/p/original/zriwECvMyJNcUdXrELeYSrXF0f2.jpg"
+    },
+    "backdrops": {
+      "w300": "https://image.tmdb.org/t/p/w300/mNqnqNtZlLRFm1VLc3YmLuuCwyI.jpg",
+      "w780": "https://image.tmdb.org/t/p/w780/mNqnqNtZlLRFm1VLc3YmLuuCwyI.jpg",
+      "w1280": "https://image.tmdb.org/t/p/w1280/mNqnqNtZlLRFm1VLc3YmLuuCwyI.jpg",
+      "original": "https://image.tmdb.org/t/p/original/mNqnqNtZlLRFm1VLc3YmLuuCwyI.jpg"
     }
   },
   "the-history-of-sound": {
