@@ -193,7 +193,8 @@
     const pct = (pairing.gateway_probability * 100).toFixed(1);
     const globalPct = (pairing.global_probability * 100).toFixed(1);
     const barWidth = Math.max(4, Math.min(100, lift * 25)); // Scale lift to bar width
-    const slug = meta?.slug || pairing.paired_slug || titleToSlug(pairing.paired_film);
+    // Use paired_film_slug for Letterboxd URL
+    const slug = pairing.paired_film_slug || meta?.slug || titleToSlug(pairing.paired_film);
     const lbUrl = `https://letterboxd.com/film/${slug}/`;
 
     const row = h('div',{className:'flex items-center gap-4 py-3 cursor-pointer hover:bg-neutral-800/60 rounded-lg px-2 -mx-2 transition',
@@ -232,12 +233,9 @@
   let POSTERS = {};
   let NEON_FILMS = [];
 
-  // FIXED: Strict matching - exact slug first, no fuzzy fallbacks that could match wrong films
-  function findMeta(title, slug = null){
+  // Look up metadata by title
+  function findMeta(title){
     if (!title) return null;
-    
-    // If a slug is provided, try it first
-    if (slug && META[slug]) return META[slug];
     
     // Try exact slug match first
     const exactSlug = titleToSlug(title);
@@ -255,33 +253,34 @@
     return null;
   }
 
-  // FIXED: Accept slug parameter to look up posters correctly
-  function findPoster(title, slug = null){
-    if (!title) return null;
+  // Look up poster by SLUG (primary method for correct lookups like dracula-2025-1)
+  function findPoster(slug){
+    if (!slug) return null;
     
-    // If a slug is provided, try it first (handles cases like dracula-2025-1)
-    if (slug && POSTERS[slug]) return POSTERS[slug];
+    // Direct slug lookup in POSTERS
+    if (POSTERS[slug]) return POSTERS[slug];
     
-    // Try exact slug match 
-    const exactSlug = titleToSlug(title);
-    if (POSTERS[exactSlug]) return POSTERS[exactSlug];
-    
-    // Try to get from metadata
-    const meta = findMeta(title, slug);
-    if (meta?.posters?.w342) return meta.posters.w342;
-    if (meta?.poster_path) return `https://image.tmdb.org/t/p/w342${meta.poster_path}`;
+    // Try to get from metadata by slug
+    if (META[slug]?.posters?.w342) return META[slug].posters.w342;
+    if (META[slug]?.poster_path) return `https://image.tmdb.org/t/p/w342${META[slug].poster_path}`;
     
     return null;
   }
 
   function buildNeonList(){
     // Get unique NEON films from affinity data
-    const neonTitles = [...new Set(AFFINITY.map(a => a.neon_film))];
+    // Group by neon_film to get the slug association
+    const neonFilmMap = new Map();
+    AFFINITY.forEach(a => {
+      if (!neonFilmMap.has(a.neon_film)) {
+        neonFilmMap.set(a.neon_film, a.neon_film_slug);
+      }
+    });
     
-    return neonTitles.map(title => {
+    return Array.from(neonFilmMap.entries()).map(([title, slug]) => {
       const meta = findMeta(title);
-      const poster = findPoster(title);
-      const slug = meta?.slug || titleToSlug(title);
+      const poster = findPoster(slug);  // Use slug for poster lookup
+      const actualSlug = slug || meta?.slug || titleToSlug(title);
       // Extract year from title like "Film Name (2025)"
       const yearMatch = title.match(/\((\d{4})\)$/);
       const year = meta?.year || (yearMatch ? parseInt(yearMatch[1]) : null);
@@ -289,7 +288,7 @@
       return {
         title: meta?.title || title.replace(/\s*\(\d{4}\)$/, ''),
         fullTitle: title,
-        slug,
+        slug: actualSlug,
         year,
         poster,
         meta
@@ -323,7 +322,7 @@
       (() => {
         const img = document.createElement('img');
         img.src = '/images/12special.svg';
-        img.alt = 'Neon';
+        img.alt = '12special';
         img.className = 'h-8 md:h-10 opacity-90 group-hover:opacity-100 transition logo-white';
         return img;
       })(),
@@ -347,7 +346,6 @@
             h('span',{className:'text-neutral-400 text-lg'}, aboutOpen ? '−' : '+')
           ),
           
-          // FIXED: prevent "false" from rendering
           aboutOpen ? h('div',{
             className:'bg-neutral-800/30 border-x border-b border-neutral-700 rounded-b-xl p-5 space-y-4'
           },
@@ -463,8 +461,9 @@
         ),
         h('div',{className:'p-5 divide-y divide-neutral-700/50'},
           ...pairings.map(p => {
-            const meta = findMeta(p.paired_film, p.paired_slug);
-            const poster = findPoster(p.paired_film, p.paired_slug);
+            const meta = findMeta(p.paired_film);
+            // Use paired_film_slug for poster lookup
+            const poster = findPoster(p.paired_film_slug);
             return pairingRow(p, meta, poster);
           })
         )
