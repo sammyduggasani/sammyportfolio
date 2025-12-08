@@ -7,6 +7,19 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <style>
+    .cursor-text {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.0rem;
+      font-family: 'SecondaryFont';
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      white-space: nowrap;
+      transform: translate(15px, 15px);
+      z-index: 9999;
+    }
+  </style>
 </head>
 <body class="scanner-landing">
 
@@ -17,6 +30,9 @@
       <span>SAMIR</span>
     </a>
   </div>
+
+  <!-- Cursor follower text -->
+  <div class="cursor-text" id="cursor-text">click anywhere to continue</div>
 
   <!-- Hidden audio -->
   <audio id="instrumental" src="audio/bgsnippet.mp3"></audio>
@@ -30,6 +46,14 @@
     setVh();
     window.addEventListener('resize', setVh);
     window.addEventListener('orientationchange', setVh);
+
+    // --- cursor follower ---
+    const cursorText = document.getElementById('cursor-text');
+    
+    document.addEventListener('mousemove', function(e) {
+      cursorText.style.left = e.clientX + 'px';
+      cursorText.style.top = e.clientY + 'px';
+    });
 
     // --- existing click logic ---
     const samirLink = document.getElementById('samir-link');
@@ -56,6 +80,5 @@
 
 </body>
 </html>
-
 
 
