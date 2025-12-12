@@ -1,0 +1,11 @@
+[build]
+    base = "frontend/"
+    command = "yarn deploy"
+
+[[plugins]]
+    package = "netlify-plugin-cache-nextjs"
+
+[[headers]]
+  for = "/whatsappimages.html"
+  [headers.values]
+    Basic-Auth = "USERNAME:sammy2025"
